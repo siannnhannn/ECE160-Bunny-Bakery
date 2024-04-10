@@ -4,13 +4,6 @@ img {
  
 }
 
-img.frameContainer {
-    background-image: ('BUNNYBAKERY.png')
-    background-position: center;
-    background-size: 100% 100%;
-    
-}
-
 body, h1, a {
     margin: 0;
     padding: 0;
@@ -25,24 +18,19 @@ body, h1, a {
     
 }
 
-.inner-container {
-    display: flex;
-    margin: auto;
-}
-
 #instruction-chatbox {
   position: fixed;
   display: flex;
   left: 50%;
   bottom: 30px;
   transform: translateX(-50%);
-  width: 47%;
+  width: 45%;
   height: 80px;
-  background-color: FEABEF;
+  background-color: #FEABEF;
   color: white;
   padding: 10px;
   border-radius: 20px;
-  border-width: 5px;
+  border-width: 3px;
   text-align: left;
   border-style: solid;
   border-color: white;
@@ -76,30 +64,20 @@ body, h1, a {
 #instruction-chatbox button:hover {
     background-color: #45a049;
 }
-    
+
+
 .sidebar {
-  position: fixed;
-  left: 40px;
-  margin: auto 0; 
-  width: 15%;
-  height: 70%;
-  background-color: #FDA2EC;
-  color: white;
-  font-size: 20px;
-  line-height: 100px;
-  padding: 20px; 
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
 }
-
-ul {
+    
+.sidebar ul {
   list-style-type: none;
-  padding: 0;
   margin: 0;
-  text-align: left; 
+  padding: 0;
  }
-
-ul li {
-  text-align: left;
-}
 
 .container {
     display: flex;
@@ -111,16 +89,7 @@ ul li {
     padding: 20px;
 }
 
-/*BACKGROUND PICTURE*/ 
-
-
-/*
-
-#sprite {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background-image: url('PINKSPRITE.png');
-    background-size: cover;
+canvas {
+    margin: auto;
 }
-*/
+

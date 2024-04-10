@@ -14,9 +14,11 @@
     <div class="container">
         <div id="sidebar" class="sidebar">
             <ul>
-                <li><a href="characterpage.html">YOUR BUNNY</a></li>
-                <li><a href="treatpage.html">YOUR TREATS</a></li>
-                <li><a href="friendspage.html">FRIENDS</a></li>
+                <a href="characterpage.html">BUNNY</a>
+                <a href="treatpage.html">TREATS</a>
+                <a href="friendspage.html">FRIENDS</a>
+                <a href="about.html">ABOUT</a>
+
             </ul>
         </div>
 
@@ -24,20 +26,18 @@
             <div id="instruction-chatbox" class="center"> 
                 <p id="instruction-text">Name your bakery:</p>
                 <div class="inner-container"></div>
-                <input type="text" id="bakeryNameInput" placeholder="૮ ˶ᵔ ᵕ ᵔ˶ ა">
+                <input type="text" id="bakeryNameInput" placeholder="૮ ˶ᵔ ᵕ ᵔ˶ ა"/>
                 <button onclick="setBakeryName()">Set Name</button>
             </div>
             <div id="bakeryNameDisplay"></div> 
         </div>
-    </div>
-    <script src="bbgame.js"></script>
+    </div> 
 
-<div id="canvas-container" style="position: relative;">
-    <canvas id="game-frame" width="711" height="540" style="border:2px solid white;"></canvas>
-    <canvas id="drawing-game-frame" width="711" height="540" style="border:2px solid white;"></canvas>
-</div>
 
+    <canvas id="game-frame" width="711" height="540" style="border:3px solid white;"></canvas>
+
+
+<script src="bbgame.js"></script>
 
 </body>
 </html>
-
