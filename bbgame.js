@@ -38,32 +38,33 @@ window.addEventListener("DOMContentLoaded", () => {
         frameCtx.drawImage(bgImg, 0, 0, frameCanvas.width, frameCanvas.height);
     };
     
-
+    const bgCounter = new Image();
+    bgCounter.src = 'BUNNYBAKERYCOUNTER.png'
     const pinkSprite = new Image();
     pinkSprite.src = 'PINKSPRITE.png';
 
-    x=5;
-    y=5;
+    x=100;
+    y=225;
     vx=0;
     vy=0;
 
     function update() {
         frameCtx.clearRect(0,0, frameCanvas.width, frameCanvas.height)
-        if(x<5) {
-            x = 5;
-        } else if (x>506) {
-            x = 506;
-        } else if (y<5) {
-            y = 5;
-        } else if (y>335) {
-            y = 335;
+        if(x<50) {
+            x = 50;
+        } else if (x>620) {
+            x = 620;
+        } else if (y<190) {
+            y = 190;
+        } else if (y>400) {
+            y = 400;
         } else {
             x+=vx;
             y+=vy;
         }
         frameCtx.drawImage(bgImg, 0, 0, frameCanvas.width, frameCanvas.height);
-
-        frameCtx.drawImage(pinkSprite, x, y,200,200);
+        frameCtx.drawImage(pinkSprite, x, y,100,100);
+        frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
         requestAnimationFrame(update)
     };
     update()

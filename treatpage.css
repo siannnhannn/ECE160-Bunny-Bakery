@@ -6,3 +6,8 @@ body {
    font-size: 20px;
    margin: 20px auto;
 }
+
+img {
+  width: 800px,
+  height: auto
+}
