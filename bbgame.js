@@ -50,21 +50,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
     function update() {
         frameCtx.clearRect(0,0, frameCanvas.width, frameCanvas.height)
-        if(x<50) {
-            x = 50;
+        if(x<45) {
+            x = 45;
         } else if (x>620) {
             x = 620;
-        } else if (y<190) {
-            y = 190;
-        } else if (y>400) {
-            y = 400;
+        } else if (y<180) {
+            y = 180;
+        } else if (y>440) {
+            y = 440;
+        } else if (y>290 && y<340 && x<575) {
+            y = 290;
+        } else if (y<420 && y>340 && x<575) {
+            y = 420;
+        } else if (x<580 && y>290 && y<420) {
+            x = 580;
         } else {
             x+=vx;
             y+=vy;
         }
         frameCtx.drawImage(bgImg, 0, 0, frameCanvas.width, frameCanvas.height);
-        frameCtx.drawImage(pinkSprite, x, y,100,100);
-        frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
+
+        if(y<305) {
+            frameCtx.drawImage(pinkSprite, x, y,110,110);
+            frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
+        } else {
+            frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
+            frameCtx.drawImage(pinkSprite, x, y, 100, 100);
+        }
         requestAnimationFrame(update)
     };
     update()
