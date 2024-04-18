@@ -1,0 +1,13 @@
+body {
+    color: #F37CDD;
+    background-color: #F7E59A;
+    text-align: center;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 20px;
+}
+
+h1 {
+    margin: 20px auto;
+}
+
+
