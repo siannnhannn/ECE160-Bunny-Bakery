@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head> 
@@ -25,25 +28,26 @@
 
 	
 
-        <div class="main-content">
-            <div id="instruction-chatbox" class="center"> 
-                <p id="instruction-text">Name your bakery:</p>
-                <div class="inner-container">
-		<form method="GET"
-             		action="{{ url_for('login') }}">
+        <div class="main-content"> 
+		<h1>Login</h1>
+		<div class="inner-container">
+		<form method="POST"
+             		action="{{ url_for('handle_post') }}">
+		<label for="username">Username:</label>
             	<input type="text"
                    name="username"
                    placeholder="Username">
+		<br>
+		<label for="password">Password:</label>
             	<input type="password"
                   	 name="password"
                    	placeholder="Password">
+		<br>
             		<button type="submit">submit</button>
         	</form>	
-
 		</div>
-                <input type="text" id="bakeryNameInput" placeholder="૮ ˶ᵔ ᵕ ᵔ˶ ა"/>
-                <button onclick="setBakeryName()">Set Name</button>
-            </div>
+		
+		
             <div id="bakeryNameDisplay"></div> 
         </div>
     </div> 
@@ -51,3 +55,5 @@
 
 </body>
 </html>
+
+
