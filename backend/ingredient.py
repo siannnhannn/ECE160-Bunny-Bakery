@@ -1,4 +1,4 @@
-import Finalproject.bunnybakery.backend.userclass as userclass
+import userclass as userclass
 
 class Pancake:
     def __init__(self, ingredient_book):
