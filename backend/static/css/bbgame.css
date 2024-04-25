@@ -52,7 +52,7 @@ body, h1, a {
     border-radius: 10px;
 }
 
-#bakeryNameInput, #instruction-chatbox button {
+#bakeryNameInput, #instruction-chatbox .button-set-name {
     margin: auto;
     padding: 10px;
     border: 1px solid #ccc;
@@ -61,13 +61,13 @@ body, h1, a {
     align-items: center;
 }
 
-#instruction-chatbox button {
+#instruction-chatbox .button-set-name {
     cursor: pointer;
     background-color: #4CAF50;
     color: white;
 }
 
-#instruction-chatbox button:hover {
+#instruction-chatbox .button-set-name:hover {
     background-color: #45a049;
 }
 
@@ -102,3 +102,30 @@ canvas {
     width: 45vw;
 }
 
+.button-fridge-contents {
+    position: fixed;
+    margin: 20% auto;
+    color: white;
+    width: 10vw;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+
+}
+
+#fridge {
+    width: 15vw;
+    background-color: #ffacec;
+    padding: 5px;
+    color: white;
+    position: fixed;
+    margin: 10% 5% auto;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+
+}

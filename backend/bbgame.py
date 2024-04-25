@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Blueprint
+from flask import Flask, render_template, Blueprint, jsonify, request
 
 
 app = Flask(__name__) 
@@ -29,6 +29,16 @@ def handle_post():
             return '<h1>invalid credentials!</h1>'
     else:
         return render_template('login.html')
+
+@app.route('/fridge_contents', methods=['GET'])
+def get_fridge_contents():
+    fridgeContents = ["milk", "eggs", "butter"]
+    result_data = {
+        'result': fridgeContents[0] + "\n" + fridgeContents[1] + "\n" + fridgeContents[2],
+    }
+    print(result_data)
+    return jsonify(result_data)
+
+
 if __name__ == '__main__':
-#    import app
     app.run(debug=True)

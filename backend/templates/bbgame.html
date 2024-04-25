@@ -24,13 +24,20 @@
 
         <div class="main-content">
             <canvas id="game-frame" width="711" height="540" style="border:3px solid white;"></canvas>
+            <button class="button button-fridge-contents" onclick="displayFridgeContents()">Open Fridge</button>
+
             <div id="instruction-chatbox" class="center"> 
                 <p id="instruction-text">Name your bakery:</p>
                 <div class="inner-container"></div>
                 <input type="text" id="bakeryNameInput" placeholder="૮ ˶ᵔ ᵕ ᵔ˶ ა"/>
-                <button onclick="setBakeryName()">Set Name</button>
+                <button class="button button-set-name" onclick="setBakeryName()">Set Name</button>
             </div>
             <div id="bakeryNameDisplay"></div> 
+            
+        </div>
+        <div id="fridge">
+            <h3>Fridge Contents</h3>
+            <div id="fridge-output"></div>
         </div>
     </div> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
