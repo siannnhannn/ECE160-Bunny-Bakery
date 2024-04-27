@@ -84,19 +84,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 function displayFridgeContents() {
-    $.ajax({
-        url: '/fridge_contents',
-        type: 'GET',
-        success: function(result_data) {
-            $('#data').text(JSON.stringify(result_data));
-        },
-        error: function(error) {
-            console.log('Error:', error);
-        }
-    });
-}
-
-function displayFridgeContents() {
     $.ajax({ 
         url: '/fridge_contents',
         type: 'GET',
@@ -109,4 +96,20 @@ function displayFridgeContents() {
         } 
     }); 
 }
+
+
+function displayCabinetContents() {
+    $.ajax({ 
+        url: '/cabinet_contents',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) { 
+            document.getElementById('cabinet-output').innerHTML = response.result; 
+        },
+        error: function(error) { 
+            console.log(error); 
+        } 
+    }); 
+}
+
 

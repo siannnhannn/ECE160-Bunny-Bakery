@@ -104,6 +104,21 @@ canvas {
 
 .button-fridge-contents {
     position: fixed;
+    margin: 15% auto;
+    color: white;
+    width: 10vw;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+
+}
+
+.button-cabinet-contents {
+    position: fixed;
     margin: 20% auto;
     color: white;
     width: 10vw;
@@ -127,5 +142,7 @@ canvas {
     border-radius: 10px;
     border-color: white;
     border-style: solid;
-
 }
+
+
+
