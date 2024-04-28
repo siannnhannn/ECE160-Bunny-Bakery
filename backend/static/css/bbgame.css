@@ -102,47 +102,74 @@ canvas {
     width: 45vw;
 }
 
-.button-fridge-contents {
-    position: fixed;
-    margin: 15% auto;
+#fridge-contents {
+    position: fixed; 
+    margin: 16.2% 59.5% auto;
     color: white;
-    width: 10vw;
-    padding: 10px;
+    width: 3vw;
+    font-size; 10px;
+    padding: 3px;
     border: 1px solid #ccc;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
     background-color: #4CAF50;
     color: white;
-
 }
 
-.button-cabinet-contents {
+#cabinet-contents{
     position: fixed;
-    margin: 20% auto;
+    margin: 7.4% 38% auto;
     color: white;
-    width: 10vw;
-    padding: 10px;
+    width: 3vw;
+    font-size: 10px;
+    text-align: center;
+    padding: 3px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 5px;
     text-align: center;
     cursor: pointer;
     background-color: #4CAF50;
     color: white;
-
 }
 
-#fridge {
-    width: 15vw;
+#ingredients {
+    margin: 6.9% 2% auto;
+    l`ine-height: 1em;
+    width: 10vw;
     background-color: #ffacec;
     padding: 5px;
     color: white;
     position: fixed;
-    margin: 10% 5% auto;
     border-radius: 10px;
     border-color: white;
     border-style: solid;
 }
 
+#fridge-container {
+    margin: 10% 5% auto;
+
+}
+
+#cabinet-container {
+    margin: 15% 5% auto;
+}
+
+#bowl-ingredients {
+    margin: 25% 2% auto;
+    l`ine-height: 1em;
+    width: 10vw;
+    background-color: #ffacec;
+    padding: 5px;
+    color: white;
+    position: fixed;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+}
+
+#bowl-container {
+    margin: 18% 5% auto;
+}
 
 

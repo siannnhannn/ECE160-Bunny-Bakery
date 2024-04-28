@@ -22,13 +22,25 @@
             </ul>
         </div>
 
+
+        <button id='fridge-contents'>Open Fridge</button>
+        <button id='cabinet-contents'>Open Cabinet</button>
+
+        <div id="ingredients">
+            <h3>Fridge Contents</h3>
+            <div id="fridge-container"></div>
+            <h3>Cabinet Contents</h3>
+            <div id="cabinet-container"></div>
+        </div>
+
+        <div id='bowl-ingredients'>
+            <h3>Bowl Ingredients</h3>
+            <div id='bowl-container'></div>
+        </div>
+
+
         <div class="main-content">
-            <canvas id="game-frame" width="711" height="540" style="border:3px solid white;"></canvas>
-
-            <button class="button button-fridge-contents" onclick="displayFridgeContents()">Open Fridge</button>
-            <button class="button button-cabinet-contents" onclick="displayCabinetContents()">Open Cabinet</button>
-
-
+            <canvas id="game-frame" width="711" height="540" style="border:3px solid white;"></canvas>           
             <div id="instruction-chatbox" class="center"> 
                 <p id="instruction-text">Name your bakery:</p>
                 <div class="inner-container"></div>
@@ -37,12 +49,6 @@
             </div>
             <div id="bakeryNameDisplay"></div> 
             
-        </div>
-        <div id="fridge">
-            <h3>Fridge Contents</h3>
-            <div id="fridge-output"></div>
-            <h3>Cabinet Contents</h3>
-            <div id="cabinet-output"></div>
         </div>
     </div> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

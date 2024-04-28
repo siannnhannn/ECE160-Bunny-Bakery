@@ -82,7 +82,7 @@ window.addEventListener("DOMContentLoaded", () => {
     update()
 })
 
-
+/*
 function displayFridgeContents() {
     $.ajax({ 
         url: '/fridge_contents',
@@ -97,7 +97,6 @@ function displayFridgeContents() {
     }); 
 }
 
-
 function displayCabinetContents() {
     $.ajax({ 
         url: '/cabinet_contents',
@@ -111,5 +110,75 @@ function displayCabinetContents() {
         } 
     }); 
 }
+*/
+
+//displaying the contents of the bowl
+function displayBowlContents(item) {
+    const container = document.getElementById('bowl-container');
+    const ingredient = document.createElement('div');
+    ingredient.textContent = item;
+    container.appendChild(ingredient);
+}
+
+
+//refridgerator ingredient buttons and adding ingredients to a bowl
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('fridge-contents').addEventListener('click', function() {
+        fetch('/fridge_contents')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('fridge-container');
+                container.innerHTML = '';
+                data.forEach(item => {
+                    const ingredient = document.createElement('button');
+                    ingredient.textContent = item;
+                    ingredient.onclick = function() {
+                        displayBowlContents(item);
+                        fetch('/ingredients_to_bowl', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ item: item })
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                    };
+                    container.appendChild(ingredient);
+                });
+            })
+            .catch(error => console.error('Error fetching fridge contents:', error));
+    });
+});
+
+//generating cabinet ingredients buttons and adding cabinet ingredients to a bowl
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('cabinet-contents').addEventListener('click', function() {
+    fetch('/cabinet_contents')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('cabinet-container');
+            container.innerHTML = '';
+            data.forEach(item => {
+                    const ingredient = document.createElement('button');
+                    ingredient.textContent = item;
+                    ingredient.onclick = function() {
+                        displayBowlContents(item);
+                        fetch('/ingredients_to_bowl', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ item: item })
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                    };
+                    container.appendChild(ingredient);
+                });
+            })
+            .catch(error => console.error('Error fetching fridge contents:', error));
+    });
+});
 
 
