@@ -82,36 +82,6 @@ window.addEventListener("DOMContentLoaded", () => {
     update()
 })
 
-/*
-function displayFridgeContents() {
-    $.ajax({ 
-        url: '/fridge_contents',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) { 
-            document.getElementById('fridge-output').innerHTML = response.result; 
-        },
-        error: function(error) { 
-            console.log(error); 
-        } 
-    }); 
-}
-
-function displayCabinetContents() {
-    $.ajax({ 
-        url: '/cabinet_contents',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) { 
-            document.getElementById('cabinet-output').innerHTML = response.result; 
-        },
-        error: function(error) { 
-            console.log(error); 
-        } 
-    }); 
-}
-*/
-
 //displaying the contents of the bowl
 function displayBowlContents(item) {
     const container = document.getElementById('bowl-container');
@@ -136,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         displayBowlContents(item);
                         fetch('/ingredients_to_bowl', {
                             method: 'POST',
-                            headers: {
+                            headers: {  
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({ item: item })
@@ -181,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+<<<<<<< HEAD
 function displayFridgeContents() {
     $.ajax({ 
         url: '/fridge_contents',
@@ -210,4 +181,69 @@ function displayCabinetContents() {
     }); 
 }
 
+=======
+//Mixing ingredients in the bowl
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('mix-button').addEventListener('click', function() {
+        fetch('/check_bowl_ingredients')
+            .then(response => response.json())
+            .then(data => {
+               if (data.mix) {
+                    alert('Mixing ingredient in bowl');
+                } else {
+                    alert('Incorrect ingredients');
+                }
+            })
+            .catch(error => console.error('Error fetching ingredients:', error));
+    });
+});
+
+
+
+
+//turning on the stove dial
+document.getElementById('dial-button').addEventListener('mousedown', function() {
+    const button = this;
+    button.degrees = button.degrees || 0;
+    
+    button.interval = setInterval(() => {
+        button.degrees += 5;
+        button.style.transform = `rotate(${button.degrees}deg)`;
+    }, 50);
+});
+
+document.getElementById('dial-button').addEventListener('mouseup', function() {
+    clearInterval(this.interval);
+});
+
+document.getElementById('dial-button').addEventListener('mouseleave', function() {
+    clearInterval(this.interval);
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('place-pan').addEventListener('click', function() {
+    showDiv() 
+    fetch('/pancake_buttons')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('pancake-actions-container');
+            container.innerHTML = '';
+            data.forEach(action => {
+                    const actions = document.createElement('button');
+                    actions.textContent = action;
+                    actions.onclick = function() {
+                    };
+                    container.appendChild(actions);
+                });
+            })
+            .catch(error => console.error('Error fetching pancake actions', error));
+    });
+});
+
+function showDiv() {
+    var div = document.getElementById('pancake-actions-container');
+    div.style.opacity = 1;
+    div.style.transition = "opacity 0.5s";
+}
 

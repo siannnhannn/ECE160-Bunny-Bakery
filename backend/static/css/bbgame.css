@@ -159,7 +159,7 @@ canvas {
 
 #ingredients {
     margin: 6.9% 2% auto;
-    l`ine-height: 1em;
+    line-height: 1em;
     width: 10vw;
 =======
 
@@ -189,7 +189,7 @@ canvas {
 
 #bowl-ingredients {
     margin: 25% 2% auto;
-    l`ine-height: 1em;
+    line-height: 1em;
     width: 10vw;
     background-color: #ffacec;
     padding: 5px;
@@ -210,4 +210,69 @@ canvas {
 =======
 >>>>>>> Stashed changes
 
+#mix-button {
+    position: fixed;
+    margin: 40% 2% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
 
+#dial-button {
+    position: fixed; 
+    margin: 10% 67% auto;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+#dial-button:active {
+    background-color: #3e8e41;
+}
+
+#cooking-pancake {
+    position: fixed;
+    margin: 7% 67% auto;
+
+}
+
+#place-pan {
+    position: fixed; 
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 10px;
+    cursor: pointer
+}
+
+
+#pancake-actions-container {
+    width: 10vw;
+    font-size: 10px;
+    font-color: white;
+    position: fixed;
+    margin: 0% 10% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+
+}
