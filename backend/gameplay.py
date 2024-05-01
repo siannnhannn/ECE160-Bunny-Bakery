@@ -1,4 +1,5 @@
 from flask import Flask, render_template, Blueprint, jsonify, request
+from collections import Counter
 
 
 app = Flask(__name__) 
@@ -32,6 +33,15 @@ def handle_post():
         return render_template('login.html')
 
 
+
+#Pancakes Class
+class pancake:
+    def __init__(self):
+        self.recipe = ["milk", "eggs", "butter", "flour", "baking powder", "sugar", "salt"]
+
+l1 = pancake()
+
+
 #creating fridge contents buttons
 @app.route('/fridge_contents')
 def fridge_contents():
@@ -44,7 +54,6 @@ def cabinet_contents():
     cabinetContents = ["flour", "baking powder", "sugar", "salt"]
     return jsonify(cabinetContents)
 
-
 bowlIngredients = []
 
 #adding cabinet/fridge contents to a bowl
@@ -55,7 +64,23 @@ def ingredients_to_bowl():
     bowlIngredients.append(item)
     return jsonify({'status': 'success', 'bowlIngredients': bowlIngredients})
 
+#checking bowl ingredients to mix
+@app.route('/check_bowl_ingredients')
+def checking_bowl_ingredients():
+    try:
+        ingredientsPresent = Counter(bowlIngredients) == Counter(l1.recipe)
+        return jsonify({"mix": ingredientsPresent})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+#creating pancake buttons
+@app.route('/pancake_buttons')
+def pancake_buttons():
+    pancakeActions = ["place batter", "flip pancake", "remove from pan"]
+    return jsonify(pancakeActions)
+
 if __name__ == '__main__':
     app.run(debug=True)
-
+    
 
