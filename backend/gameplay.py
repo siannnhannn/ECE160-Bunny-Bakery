@@ -85,7 +85,6 @@ def get_cabinet_contents():
     return jsonify(result_data)
 
 
->>>>>>> Stashed changes
 
 #checking bowl ingredients to mix
 @app.route('/check_bowl_ingredients')
