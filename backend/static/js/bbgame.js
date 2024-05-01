@@ -181,4 +181,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function displayFridgeContents() {
+    $.ajax({ 
+        url: '/fridge_contents',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) { 
+            document.getElementById('fridge-output').innerHTML = response.result; 
+        },
+        error: function(error) { 
+            console.log(error); 
+        } 
+    }); 
+}
+
+
+function displayCabinetContents() {
+    $.ajax({ 
+        url: '/cabinet_contents',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) { 
+            document.getElementById('cabinet-output').innerHTML = response.result; 
+        },
+        error: function(error) { 
+            console.log(error); 
+        } 
+    }); 
+}
+
 
