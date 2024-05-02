@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-<<<<<<< HEAD
+
 function displayFridgeContents() {
     $.ajax({ 
         url: '/fridge_contents',
@@ -181,7 +181,7 @@ function displayCabinetContents() {
     }); 
 }
 
-=======
+
 //Mixing ingredients in the bowl
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('mix-button').addEventListener('click', function() {
