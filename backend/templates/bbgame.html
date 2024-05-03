@@ -21,16 +21,40 @@
 
             </ul>
         </div>
+    
+
+        <button id='fridge-contents'>Open Fridge</button>
+        <button id='cabinet-contents'>Open Cabinet</button>
+        <button id='mix-button'>Mix Bowl</button>
+        <div id='stove-dial-generated'></div>
+
+
+        <div id="ingredients">
+            <h3>Fridge Contents</h3>
+            <div id="fridge-container"></div>
+            <h3>Cabinet Contents</h3>
+            <div id="cabinet-container"></div>
+        </div>
+
+        <div id='bowl-ingredients'>
+            <h3>Bowl Ingredients</h3>
+            <div id='bowl-container'></div>
+        </div>
+
+
+        <div id='cooking-pancake'>
+            <div id='pancake-actions-container' style="opacity: 0"></div>
+        </div>
 
         <div class="main-content">
-            <canvas id="game-frame" width="711" height="540" style="border:3px solid white;"></canvas>
+            <canvas id="game-frame" width="711" height="540" style="border:3px solid white;"></canvas>           
             <div id="instruction-chatbox" class="center"> 
                 <p id="instruction-text">Name your bakery:</p>
                 <div class="inner-container"></div>
                 <input type="text" id="bakeryNameInput" placeholder="૮ ˶ᵔ ᵕ ᵔ˶ ა"/>
-                <button onclick="setBakeryName()">Set Name</button>
+                <button class="button button-set-name" onclick="setBakeryName()">Set Name</button>
             </div>
-            <div id="bakeryNameDisplay"></div> 
+            <div id="bakeryNameDisplay"></div>  
         </div>
     </div> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
