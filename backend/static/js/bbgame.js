@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             })
             .catch(error => console.error('Error fetching fridge contents:', error));
-    });
+ aaaaaaa   });
 });
 
 //Mixing ingredients in the bowl
@@ -158,8 +158,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                if (data.mix) {
-                    alert('Mixing ingredient in bowl');
-                } else {
+                   generateStoveDial();
+                   //alert('Mixing ingredient in bowl');
+               } else {
                     alert('Incorrect ingredients');
                 }
             })
@@ -168,51 +169,113 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+//generating and turning the stove dial
+function generateStoveDial() {
+    const dialButton = document.createElement('button')
+    dialButton.textContent = "Dial Button"
+    dialButton.id = "dial-button";
+    const container = document.getElementById('stove-dial-generated');
+    container.appendChild(dialButton);
+
+    dialButton.addEventListener('mousedown', function() {
+        const button = this;
+        button.degrees = button.degrees || 0; 
+        button.interval = setInterval(() => {
+            if (button.degrees < 270) {
+                button.degrees += 5;
+                button.style.transform = `rotate(${button.degrees}deg)`;
+            } else {
+                button.degrees = 270;
+                button.style.transform = `rotate(${button.degrees}deg)`;
+                generatePlacePan();
+                clearInterval(button.interval);
+            }
+        }, 50);
+    });
+
+    dialButton.addEventListener('mouseup', function() {
+        clearInterval(this.interval);
+
+    }); 
+    dialButton.addEventListener('mouseleave', function() {
+        clearInterval(this.interval);
+    });
+}
 
 
-//turning on the stove dial
-document.getElementById('dial-button').addEventListener('mousedown', function() {
-    const button = this;
-    button.degrees = button.degrees || 0;
-    
-    button.interval = setInterval(() => {
-        button.degrees += 5;
-        button.style.transform = `rotate(${button.degrees}deg)`;
-    }, 50);
-});
-
-document.getElementById('dial-button').addEventListener('mouseup', function() {
-    clearInterval(this.interval);
-});
-
-document.getElementById('dial-button').addEventListener('mouseleave', function() {
-    clearInterval(this.interval);
-});
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('place-pan').addEventListener('click', function() {
-    showDiv() 
-    fetch('/pancake_buttons')
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('pancake-actions-container');
-            container.innerHTML = '';
-            data.forEach(action => {
-                    const actions = document.createElement('button');
-                    actions.textContent = action;
-                    actions.onclick = function() {
+// Generating the 'Place Pan' button
+function generatePlacePan() {
+    const placePan = document.createElement('button');
+    placePan.textContent = "Place Pan";
+    placePan.id = "place-pan";
+    const container1 = document.getElementById('cooking-pancake');
+    container1.appendChild(placePan);
+
+    placePan.addEventListener('click', function() {
+        showDiv(); // This function needs to be defined somewhere in your code
+        fetch('/pancake_buttons')
+            .then(response => response.json())
+            .then(data => {
+                const container2 = document.getElementById('pancake-actions-container');
+                container2.innerHTML = '';
+                data.forEach(action => {
+                    const actionButton = document.createElement('button');
+                    actionButton.textContent = action;
+                    actionButton.onclick = function() {
+                        countingActions(actionButton.textContent);
+                        areWeCooked();
                     };
-                    container.appendChild(actions);
+                    container2.appendChild(actionButton);
                 });
             })
-            .catch(error => console.error('Error fetching pancake actions', error));
+            .catch(error => {
+                console.error('Error fetching pancake actions', error);
+            });
     });
-});
+}
+
+
+// Send a click of an action to the Python side
+function countingActions(actionButton) {
+    // Send instance of button click to python backend
+    const buttonId = actionButton.id;
+    fetch('/counting_pancake_actions', {
+        method: "POST",
+        body: JSON.stringify({
+            buttonId: actionButton
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+function areWeCooked() {
+    // Receive instance of all pancakes cooked from python backend
+    fetch('/all_pancakes_cooked')
+    .then(response => response.json())
+    .then(data => {
+        if (data.cookedStatus) {
+            // Plate the pancakes
+            console.log("All pancakes are cooked. Plating the pancakes...");
+        } else {
+            console.log("Pancakes are not all cooked.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 
 function showDiv() {
     var div = document.getElementById('pancake-actions-container');
     div.style.opacity = 1;
     div.style.transition = "opacity 0.5s";
 }
-
