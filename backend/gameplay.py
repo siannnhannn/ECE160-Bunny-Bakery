@@ -97,27 +97,6 @@ def add_bowl_ingredient():
     item = data['item']
     bowlIngredients.append(item)
     return jsonify({'status': 'success', 'bowlIngredients': bowlIngredients})
-  
-@app.route('/fridge_contents', methods=['GET'])
-def get_fridge_contents():
-    fridgeContents = ["milk", "eggs", "butter"]
-    result_data = {
-        'result': fridgeContents[0] + "\n" + fridgeContents[1] + "\n" + fridgeContents[2],
-    }
-    print(result_data)
-    return jsonify(result_data)
-
-
-@app.route('/cabinet_contents', methods=['GET'])
-def get_cabinet_contents():
-    cabinetContents = ["flour", "baking powder", "sugar", "salt"]
-    result_data = {
-        'result':cabinetContents[0] + "\n" + cabinetContents[1] + "\n" + cabinetContents[2],
-    }
-    print(result_data)
-    return jsonify(result_data)
-
-
 
 #removing cabinet/fridge contents from the bowl
 @app.route('/remove_bowl_ingredient', methods=['POST'])
