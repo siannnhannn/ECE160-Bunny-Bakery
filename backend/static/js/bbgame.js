@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const container = document.getElementById('cabinet-container');
                 container.innerHTML = '';
 
-                data.forEach(item => {
+                data.cabinetContents.forEach(item => {
                     const ingredient = document.createElement('button');
                     const removeIngredient = document.createElement('button');
                     
