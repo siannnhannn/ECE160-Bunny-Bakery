@@ -189,67 +189,65 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-//generating cabinet ingredients buttons and adding cabinet ingredients to a bowl
+// Generating cabinet ingredient buttons and adding cabinet ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cabinet-contents').addEventListener('click', function() {
-    fetch('/cabinet_contents',{
-	    method: 'POST',
-	    headers: {
-		    'Content-Type': 'application/json'
-	    },
-	    body: JSON.stringify({ x: x , y: y })
-
-    })
-	.then(response => response.json())
+        fetch('/cabinet_contents', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ x: x, y: y })
+        })
+        .then(response => response.json())
         .then(data => {
-		if (data.signal) {
-	            const container = document.getElementById('cabinet-container');
-	            container.innerHTML = '';
-	
-	            data.forEach(item => {
-	                const ingredient = document.createElement('button');
-	                const removeIngredient = document.createElement('button');
-	                ingredient.textContent = `Add ${item}`;
-	                removeIngredient.textContent = `Remove ${item}`;
-	                
-	                ingredient.onclick = function() {
-	                    displayBowlContents(item);
-	                    fetch('/add_bowl_ingredient', {
-	                        method: 'POST',
-	                        headers: {  
-	                            'Content-Type': 'application/json'
-	                        },
-	                        body: JSON.stringify({ item: item })
-	                    })
-	                    .then(response => response.json())
-	                    .then(data => console.log(data))
-	                };
-	                container.appendChild(ingredient);
-	
-	                removeIngredient.onclick = function() {
-	                    console.log('Remove button clicked');
-	                    removeBowlContents(item);
-	                    fetch('/remove_bowl_ingredient', {
-	                        method: 'POST',
-	                        headers: {  
-	                            'Content-Type': 'application/json'
-	                        },
-	                        body: JSON.stringify({ item: item })
-	                    })
-	                    .then(response => response.json())
-	                    .then(data => console.log(data))
-	                    };
-	                    container.appendChild(removeIngredient);
-		} else {
-			alert("can't reach the cabinet");
-		}
-	        });
-	})
-	        .catch(error => console.error('Error fetching fridge contents:', error));       
+            if (data.signal) {
+                const container = document.getElementById('cabinet-container');
+                container.innerHTML = '';
+
+                data.forEach(item => {
+                    const ingredient = document.createElement('button');
+                    const removeIngredient = document.createElement('button');
+                    
+                    ingredient.textContent = `Add ${item}`;
+                    removeIngredient.textContent = `Remove ${item}`;
+
+                    ingredient.onclick = function() {
+                        displayBowlContents(item);
+                        fetch('/add_bowl_ingredient', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ item: item })
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data));
+                    };
+                    container.appendChild(ingredient);
+
+                    removeIngredient.onclick = function() {
+                        console.log('Remove button clicked');
+                        removeBowlContents(item);
+                        fetch('/remove_bowl_ingredient', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ item: item })
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data));
+                    };
+                    container.appendChild(removeIngredient);
+                });
+            } else {
+                alert("Can't reach the cabinet");
+            }
+        })
+        .catch(error => console.error('Error fetching cabinet contents:', error));
     });
 });
-
 
 
 //clearing all the ingredients in the bowl
