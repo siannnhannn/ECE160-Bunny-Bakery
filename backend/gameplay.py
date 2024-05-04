@@ -86,9 +86,9 @@ def cabinet_contents():
     if (x>115 and x<175 and y>150 and y<204):
         print(x,y)
         cabinetContents = ["flour", "baking powder", "sugar", "salt", "syrup"]
+        return jsonify({"cabinetContents": cabinetContents, "signal": True})
     else:
-        cabinetContents = ["","","","",""]
-    return jsonify(cabinetContents)
+    return jsonify({"signal": False})
 bowlIngredients = []
 
 #adding cabinet/fridge contents to the bowl
