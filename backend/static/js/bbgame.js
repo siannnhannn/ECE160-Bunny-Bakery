@@ -119,9 +119,11 @@ function removeBowlContents(item) {
     }
 }
 
+/*
 //first message before game begins
 fetchMessages(1);
 fetchMessages(2);
+*/
 
 // Refrigerator ingredient buttons and adding ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
