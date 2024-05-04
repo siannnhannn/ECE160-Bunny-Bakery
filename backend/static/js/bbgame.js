@@ -75,7 +75,7 @@ window.addEventListener("DOMContentLoaded", () => {
             frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
         } else {
             frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
-            frameCtx.drawImage(pinkSprite, x, y, 100, 100);
+            frameCtx.drawImage(pinkSprite, x, y, 110, 110);
         }
         requestAnimationFrame(update)
     };
@@ -254,6 +254,8 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Error fetching fridge contents:', error));       });
 });
+
+
 
 //clearing all the ingredients in the bowl
 function mixedBowlContentsDisplay() {

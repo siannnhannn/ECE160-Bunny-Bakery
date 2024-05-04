@@ -16,6 +16,25 @@ def view_landing():
 def bbgame():
     return render_template('bbgame.html')
 
+#dylan's login code
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/handle_post', methods=['POST'])
+def handle_post():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        print(username, password)
+        if username in users and users[username] == password:
+            return '<h1>Welcome!!!</h1>'
+        else:
+            return '<h1>invalid credentials!</h1>'
+    else:
+        return render_template('login.html')
+
+
 #Pancakes Class
 class pancake:
     def __init__(self):
@@ -78,6 +97,27 @@ def add_bowl_ingredient():
     item = data['item']
     bowlIngredients.append(item)
     return jsonify({'status': 'success', 'bowlIngredients': bowlIngredients})
+  
+@app.route('/fridge_contents', methods=['GET'])
+def get_fridge_contents():
+    fridgeContents = ["milk", "eggs", "butter"]
+    result_data = {
+        'result': fridgeContents[0] + "\n" + fridgeContents[1] + "\n" + fridgeContents[2],
+    }
+    print(result_data)
+    return jsonify(result_data)
+
+
+@app.route('/cabinet_contents', methods=['GET'])
+def get_cabinet_contents():
+    cabinetContents = ["flour", "baking powder", "sugar", "salt"]
+    result_data = {
+        'result':cabinetContents[0] + "\n" + cabinetContents[1] + "\n" + cabinetContents[2],
+    }
+    print(result_data)
+    return jsonify(result_data)
+
+
 
 #removing cabinet/fridge contents from the bowl
 @app.route('/remove_bowl_ingredient', methods=['POST'])
