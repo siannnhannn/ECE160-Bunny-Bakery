@@ -145,7 +145,14 @@ fetchMessages(2);
 // Refrigerator ingredient buttons and adding ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('fridge-contents').addEventListener('click', function() {
-        fetch('/fridge_contents')
+        fetch('/fridge_contents', {
+		method: 'POST',
+		headers: {
+		    'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ x: x , y: y })
+	
+	})
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('fridge-container');
@@ -196,7 +203,14 @@ document.addEventListener('DOMContentLoaded', function() {
 //generating cabinet ingredients buttons and adding cabinet ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cabinet-contents').addEventListener('click', function() {
-    fetch('/cabinet_contents')
+    fetch('/cabinet_contents',{
+	    method: 'POST',
+	    headers: {
+		    'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({ x: x , y: y })
+
+    })
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('cabinet-container');
@@ -284,19 +298,24 @@ function generateStoveDial() {
     container.appendChild(dialButton);
 
     dialButton.addEventListener('mousedown', function() {
-        const button = this;
-        button.degrees = button.degrees || 0; 
-        button.interval = setInterval(() => {
-            if (button.degrees < 270) {
-                button.degrees += 5;
-                button.style.transform = `rotate(${button.degrees}deg)`;
-            } else {
-                button.degrees = 270;
-                button.style.transform = `rotate(${button.degrees}deg)`;
-                generatePlacePan();
-                clearInterval(button.interval);
-            }
-        }, 50);
+	    fetch('/stove_dial_turn',{
+	    	method: 'POST',
+	    	headers: {
+		    'Content-Type': 'application/json'
+	    	},
+	    	body: JSON.stringify({ x: x , y: y })
+	    })
+	    	.then(response => response.json())
+	        .then(data => {
+			if (data.turn){
+				turnDial();
+			}
+			else{
+				alert("Can't reach stove");
+			}
+       
+    		})
+            .catch(error => console.error('Error turning stove dial', error));
     });
 
     dialButton.addEventListener('mouseup', function() {
@@ -308,7 +327,22 @@ function generateStoveDial() {
     });
 }
 
+function turnDial() {
+    	const button = document.getElementById('dial-button');
+	button.degrees = button.degrees || 0; 
+        button.interval = setInterval(() => {
+            if (button.degrees < 270) {
+                button.degrees += 5;
+                button.style.transform = `rotate(${button.degrees}deg)`;
+            } else {
+                button.degrees = 270;
+                button.style.transform = `rotate(${button.degrees}deg)`;
+                generatePlacePan();
+                clearInterval(button.interval);
+            }
+        }, 50);	
 
+}
 
 
 // Generating the 'Place Pan' button

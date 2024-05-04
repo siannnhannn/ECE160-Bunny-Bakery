@@ -12,30 +12,9 @@ app = Flask(__name__)
 def view_landing():
     return render_template('landing.html')
 
-
 @app.route('/bbgame')
 def bbgame():
     return render_template('bbgame.html')
-
-#dylan's login code
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/handle_post', methods=['POST'])
-def handle_post():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        print(username, password)
-        if username in users and users[username] == password:
-            return '<h1>Welcome!!!</h1>'
-        else:
-            return '<h1>invalid credentials!</h1>'
-    else:
-        return render_template('login.html')
-
-
 
 #Pancakes Class
 class pancake:
@@ -63,20 +42,33 @@ l1 = pancake()
 def get_messages():
     return jsonify(l1.messages)
 
-
 #creating fridge contents buttons
-@app.route('/fridge_contents')
+@app.route('/fridge_contents', methods=['GET','POST'])
 def fridge_contents():
-    fridgeContents = ["milk", "eggs", "butter", "strawberries", "blueberries"]
+    data = request.get_json()
+    x = data['x']
+    y = data['y']
+    print(x,y) 
+
+    if (x>430 and x<535 and y>150 and y<204):
+        print(x,y) 
+        fridgeContents = ["milk", "eggs", "butter", "strawberries", "blueberries"]
+    else:
+        fridgeContents = ["","","","",""]
     return jsonify(fridgeContents)
 
 #creating cabinet contents buttons
-@app.route('/cabinet_contents')
+@app.route('/cabinet_contents', methods=['GET','POST'])
 def cabinet_contents():
-    cabinetContents = ["flour", "baking powder", "sugar", "salt", "syrup"]
+    data = request.get_json()
+    x = data['x']
+    y = data['y']
+    if (x>115 and x<175 and y>150 and y<204):
+        print(x,y)
+        cabinetContents = ["flour", "baking powder", "sugar", "salt", "syrup"]
+    else:
+        cabinetContents = ["","","","",""]
     return jsonify(cabinetContents)
-
-
 bowlIngredients = []
 
 #adding cabinet/fridge contents to the bowl
@@ -122,6 +114,17 @@ def pancake_buttons():
 click_counts = {'place batter': 0, 'flip pancake': 0, 'remove from pan': 0, 'plate pancake': 0}
 allCooked = False
 
+
+@app.route('/stove_dial_turn', methods=['GET','POST'])
+def turn_dial():
+    data = request.get_json()
+    x = data['x']
+    y = data['y']
+    if (x>565 and x<620 and y>150 and y<204):
+        print(x,y)
+        return jsonify({"turn": True})
+    else:
+        return jsonify({"turn": False})
 
 def check_all(dictionary):
     allCooked = all(value == 3 for value in dictionary.values())
