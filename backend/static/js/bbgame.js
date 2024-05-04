@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	                const container = document.getElementById('fridge-container');
 	                container.innerHTML = '';
 	
-	                data.forEach(item => {
+	                data.fridgeContents.forEach(item => {
 	                    const ingredient = document.createElement('button');
 	                    const removeIngredient = document.createElement('button');
 	                    ingredient.textContent = `Add ${item}`;
