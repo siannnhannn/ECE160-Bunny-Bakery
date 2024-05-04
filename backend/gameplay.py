@@ -72,10 +72,10 @@ def fridge_contents():
     if (x>430 and x<535 and y>150 and y<204):
         print(x,y) 
         fridgeContents = ["milk", "eggs", "butter", "strawberries", "blueberries"]
-        return jsonify(fridgeContents)
-
+        return jsonify({"fridgeContents": fridgeContents , "signal": True })
     else:
-        return alert("Can't reach fridge")
+       return jsonify({"fridgeContents": fridgeContents , "signal": False})
+
     
 #creating cabinet contents buttons
 @app.route('/cabinet_contents', methods=['GET','POST'])
