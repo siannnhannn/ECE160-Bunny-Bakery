@@ -72,9 +72,9 @@ def fridge_contents():
     if (x>430 and x<535 and y>150 and y<204):
         print(x,y) 
         fridgeContents = ["milk", "eggs", "butter", "strawberries", "blueberries"]
-        return jsonify({"fridgeContents": fridgeContents , "signal": True })
+        return jsonify({"fridgeContents": fridgeContents, "signal": True})
     else:
-       return jsonify({"fridgeContents": fridgeContents , "signal": False})
+       return jsonify({"signal": False})
 
     
 #creating cabinet contents buttons
