@@ -82,26 +82,7 @@ window.addEventListener("DOMContentLoaded", () => {
     update()
 })
 
-
-function fetchMessages(number) {
-    fetch("/messages")
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(messages) {
-            var messageBox = document.getElementById("message-box");
-            messageBox.innerHTML = "";
-            messages.forEach(function(m) {
-                var p = document.createElement("p");
-                p.textContent = m.message;
-                messageBox.appendChild(p);
-            });
-        })
-        .catch(function(error) {
-            console.error("Error fetching messages:", error);
-        });
-}
-
+/*
 //chatbox fetching messages from backend and displaying them
 function fetchMessages(messageIndex) {
     fetch("/messages")
@@ -116,7 +97,7 @@ function fetchMessages(messageIndex) {
             console.error("Error fetching messages:", error);
         });
 }
-
+*/
 
 // Displaying the contents of the bowl on add ingredient button press
 function displayBowlContents(item) {
