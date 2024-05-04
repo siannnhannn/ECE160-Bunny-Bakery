@@ -82,16 +82,67 @@ window.addEventListener("DOMContentLoaded", () => {
     update()
 })
 
-//displaying the contents of the bowl
+
+function fetchMessages(number) {
+    fetch("/messages")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(messages) {
+            var messageBox = document.getElementById("message-box");
+            messageBox.innerHTML = "";
+            messages.forEach(function(m) {
+                var p = document.createElement("p");
+                p.textContent = m.message;
+                messageBox.appendChild(p);
+            });
+        })
+        .catch(function(error) {
+            console.error("Error fetching messages:", error);
+        });
+}
+
+//chatbox fetching messages from backend and displaying them
+function fetchMessages(messageIndex) {
+    fetch("/messages")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(messages) {
+            const messageBox = document.getElementById("message-box");
+            messageBox.innerHTML = messages[messageIndex].message;
+        })
+        .catch(function(error) {
+            console.error("Error fetching messages:", error);
+        });
+}
+
+
+// Displaying the contents of the bowl on add ingredient button press
 function displayBowlContents(item) {
     const container = document.getElementById('bowl-container');
     const ingredient = document.createElement('div');
+    ingredient.id = item;
     ingredient.textContent = item;
     container.appendChild(ingredient);
 }
 
+// Removing contents of the bowl on remove ingredient button press
+function removeBowlContents(item) {
+    const container = document.getElementById('bowl-container');
+    const ingredient = document.getElementById(item);
+    if (ingredient) {
+        container.removeChild(ingredient); 
+    } else {
+        console.warn(`No element found with ID ${item}`);
+    }
+}
 
-//refridgerator ingredient buttons and adding ingredients to a bowl
+//first message before game begins
+fetchMessages(1);
+fetchMessages(2);
+
+// Refrigerator ingredient buttons and adding ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('fridge-contents').addEventListener('click', function() {
         fetch('/fridge_contents', {
@@ -106,12 +157,16 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 const container = document.getElementById('fridge-container');
                 container.innerHTML = '';
+
                 data.forEach(item => {
                     const ingredient = document.createElement('button');
-                    ingredient.textContent = item;
+                    const removeIngredient = document.createElement('button');
+                    ingredient.textContent = `Add ${item}`;
+                    removeIngredient.textContent = `Remove ${item}`;
+                    
                     ingredient.onclick = function() {
                         displayBowlContents(item);
-                        fetch('/ingredients_to_bowl', {
+                        fetch('/add_bowl_ingredient', {
                             method: 'POST',
                             headers: {  
                                 'Content-Type': 'application/json'
@@ -122,11 +177,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(data => console.log(data))
                     };
                     container.appendChild(ingredient);
+
+                    removeIngredient.onclick = function() {
+                        console.log('Remove button clicked');
+                        removeBowlContents(item);
+                        fetch('/remove_bowl_ingredient', {
+                            method: 'POST',
+                            headers: {  
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ item: item })
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                    };
+                    container.appendChild(removeIngredient);
                 });
             })
             .catch(error => console.error('Error fetching fridge contents:', error));
     });
 });
+
+
 
 //generating cabinet ingredients buttons and adding cabinet ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
@@ -143,27 +215,60 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             const container = document.getElementById('cabinet-container');
             container.innerHTML = '';
+
             data.forEach(item => {
-                    const ingredient = document.createElement('button');
-                    ingredient.textContent = item;
-                    ingredient.onclick = function() {
-                        displayBowlContents(item);
-                        fetch('/ingredients_to_bowl', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ item: item })
-                        })
-                        .then(response => response.json())
-                        .then(data => console.log(data))
+                const ingredient = document.createElement('button');
+                const removeIngredient = document.createElement('button');
+                ingredient.textContent = `Add ${item}`;
+                removeIngredient.textContent = `Remove ${item}`;
+                
+                ingredient.onclick = function() {
+                    displayBowlContents(item);
+                    fetch('/add_bowl_ingredient', {
+                        method: 'POST',
+                        headers: {  
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ item: item })
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                };
+                container.appendChild(ingredient);
+
+                removeIngredient.onclick = function() {
+                    console.log('Remove button clicked');
+                    removeBowlContents(item);
+                    fetch('/remove_bowl_ingredient', {
+                        method: 'POST',
+                        headers: {  
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ item: item })
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
                     };
-                    container.appendChild(ingredient);
+                    container.appendChild(removeIngredient);
                 });
             })
-            .catch(error => console.error('Error fetching fridge contents:', error));
- aaaaaaa   });
+            .catch(error => console.error('Error fetching fridge contents:', error));       });
 });
+
+//clearing all the ingredients in the bowl
+function mixedBowlContentsDisplay() {
+    const container = document.getElementById('bowl-container');
+    container.innerHTML = '';
+        fetch('/remove_all_bowl_ingredients', {
+        method: 'POST',
+        headers: {  
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+}
+
 
 //Mixing ingredients in the bowl
 document.addEventListener('DOMContentLoaded', function() {
@@ -172,8 +277,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                if (data.mix) {
+                   mixedBowlContentsDisplay();
                    generateStoveDial();
-                   //alert('Mixing ingredient in bowl');
+
                } else {
                     alert('Incorrect ingredients');
                 }
@@ -297,7 +403,8 @@ function areWeCooked() {
     .then(data => {
         if (data.cookedStatus) {
             // Plate the pancakes
-            console.log("All pancakes are cooked. Plating the pancakes...");
+            console.log("Pancakes are done cooking.");
+            addToppings();
         } else {
             console.log("Pancakes are not all cooked.");
         }
@@ -305,6 +412,36 @@ function areWeCooked() {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+
+
+
+//add syrup and fruits to the pancake
+function addToppings() {
+    document.getElementById('check-toppings').addEventListener('click', function() {
+        fetch('/check_bowl_toppings')
+            .then(response => response.json())
+            .then(data => {
+                if (data.toppings) {
+                    // chatbox message
+                    generateLevelFinishButton(); 
+                } else {
+                    alert('Incorrect toppings');
+                }
+            })
+            .catch(error => console.error('Error fetching ingredients:', error));
+    });
+}
+
+function generateLevelFinishButton() {
+    const finishedButton = document.createElement('button')
+    finishedButton.textContent = "Finish Game"
+    finishedButton.id = "finished-button"
+    const container = document.getElementById('end-of-game');
+    container.appendChild(finishedButton);
+    alert('YOU HAVE FINISHED THE LEVEL GOOD JOB!!!!!!!!');
+
 }
 
 

@@ -156,7 +156,7 @@ canvas {
 }
 
 #bowl-ingredients {
-    margin: 25% 2% auto;
+    margin: 6.9% 14.5% auto;
     line-height: 1em;
     width: 10vw;
     background-color: #ffacec;
@@ -174,7 +174,7 @@ canvas {
 
 #mix-button {
     position: fixed;
-    margin: 40% 2% auto;
+    margin: 40% 80% auto;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -206,9 +206,7 @@ canvas {
 #cooking-pancake {
     position: fixed;
     margin: 7% 67% auto;
-
 }
-
 
 #place-pan {
     position: fixed; 
@@ -238,3 +236,32 @@ canvas {
     background-color: #4CAF50;
     color: white;
 }
+
+#end-of-game {
+    position: fixed;
+    margin: 50% 80% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+
+}
+
+#check-toppings {
+    position: fixed;
+    margin: 20% 80% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
+
+
