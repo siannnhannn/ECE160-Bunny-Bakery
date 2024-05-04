@@ -88,7 +88,7 @@ def cabinet_contents():
         cabinetContents = ["flour", "baking powder", "sugar", "salt", "syrup"]
         return jsonify({"cabinetContents": cabinetContents, "signal": True})
     else:
-    return jsonify({"signal": False})
+        return jsonify({"signal": False})
 bowlIngredients = []
 
 #adding cabinet/fridge contents to the bowl
