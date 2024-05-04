@@ -12,30 +12,9 @@ app = Flask(__name__)
 def view_landing():
     return render_template('landing.html')
 
-
 @app.route('/bbgame')
 def bbgame():
     return render_template('bbgame.html')
-
-#dylan's login code
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/handle_post', methods=['POST'])
-def handle_post():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        print(username, password)
-        if username in users and users[username] == password:
-            return '<h1>Welcome!!!</h1>'
-        else:
-            return '<h1>invalid credentials!</h1>'
-    else:
-        return render_template('login.html')
-
-
 
 #Pancakes Class
 class pancake:
@@ -44,23 +23,36 @@ class pancake:
         self.cookedPancake = {'place batter': 3, 'flip pancake2': 3, 'remove from pan': 3}
         self.pancakeActions = ["place batter", "flip pancake", "remove from pan"]
 
-
-
-#instantiating level1
 l1 = pancake()
 
-
 #creating fridge contents buttons
-@app.route('/fridge_contents')
+@app.route('/fridge_contents', methods=['GET','POST'])
 def fridge_contents():
-    fridgeContents = ["milk", "eggs", "butter"]
+    data = request.get_json()
+    x = data['x']
+    y = data['y']
+    print(x,y) 
+
+    if (x>430 and x<535 and y>180 and y<204):
+        print(x,y) 
+        fridgeContents = ["milk", "eggs", "butter"]
+    else:
+        fridgeContents = ["","",""]
     return jsonify(fridgeContents)
 
 #creating cabinet contents buttons
-@app.route('/cabinet_contents')
+@app.route('/cabinet_contents', methods=['GET','POST'])
 def cabinet_contents():
-    cabinetContents = ["flour", "baking powder", "sugar", "salt"]
+    data = request.get_json()
+    x = data['x']
+    y = data['y']
+    if (x>115 and x<175 and y>180 and y<204):
+        print(x,y)
+        cabinetContents = ["flour", "baking powder", "sugar", "salt"]
+    else:
+        cabinetContents = ["","",""]
     return jsonify(cabinetContents)
+
 bowlIngredients = []
 
 #adding cabinet/fridge contents to a bowl

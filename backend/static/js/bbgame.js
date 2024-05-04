@@ -94,7 +94,14 @@ function displayBowlContents(item) {
 //refridgerator ingredient buttons and adding ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('fridge-contents').addEventListener('click', function() {
-        fetch('/fridge_contents')
+        fetch('/fridge_contents', {
+		method: 'POST',
+		headers: {
+		    'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ x: x , y: y })
+	
+	})
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('fridge-container');
@@ -124,7 +131,14 @@ document.addEventListener('DOMContentLoaded', function() {
 //generating cabinet ingredients buttons and adding cabinet ingredients to a bowl
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cabinet-contents').addEventListener('click', function() {
-    fetch('/cabinet_contents')
+    fetch('/cabinet_contents',{
+	    method: 'POST',
+	    headers: {
+		    'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({ x: x , y: y })
+
+    })
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('cabinet-container');
