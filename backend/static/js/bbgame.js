@@ -192,19 +192,24 @@ function generateStoveDial() {
     container.appendChild(dialButton);
 
     dialButton.addEventListener('mousedown', function() {
-        const button = this;
-        button.degrees = button.degrees || 0; 
-        button.interval = setInterval(() => {
-            if (button.degrees < 270) {
-                button.degrees += 5;
-                button.style.transform = `rotate(${button.degrees}deg)`;
-            } else {
-                button.degrees = 270;
-                button.style.transform = `rotate(${button.degrees}deg)`;
-                generatePlacePan();
-                clearInterval(button.interval);
-            }
-        }, 50);
+	    fetch('/stove_dial_turn',{
+	    	method: 'POST',
+	    	headers: {
+		    'Content-Type': 'application/json'
+	    	},
+	    	body: JSON.stringify({ x: x , y: y })
+	    })
+	    	.then(response => response.json())
+	        .then(data => {
+			if (data.turn){
+				turnDial();
+			}
+			else{
+				alert("Can't reach stove");
+			}
+       
+    		})
+            .catch(error => console.error('Error turning stove dial', error));
     });
 
     dialButton.addEventListener('mouseup', function() {
@@ -216,7 +221,22 @@ function generateStoveDial() {
     });
 }
 
+function turnDial() {
+    	const button = document.getElementById('dial-button');
+	button.degrees = button.degrees || 0; 
+        button.interval = setInterval(() => {
+            if (button.degrees < 270) {
+                button.degrees += 5;
+                button.style.transform = `rotate(${button.degrees}deg)`;
+            } else {
+                button.degrees = 270;
+                button.style.transform = `rotate(${button.degrees}deg)`;
+                generatePlacePan();
+                clearInterval(button.interval);
+            }
+        }, 50);	
 
+}
 
 
 // Generating the 'Place Pan' button

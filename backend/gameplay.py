@@ -33,7 +33,7 @@ def fridge_contents():
     y = data['y']
     print(x,y) 
 
-    if (x>430 and x<535 and y>180 and y<204):
+    if (x>430 and x<535 and y>150 and y<204):
         print(x,y) 
         fridgeContents = ["milk", "eggs", "butter"]
     else:
@@ -46,7 +46,7 @@ def cabinet_contents():
     data = request.get_json()
     x = data['x']
     y = data['y']
-    if (x>115 and x<175 and y>180 and y<204):
+    if (x>115 and x<175 and y>150 and y<204):
         print(x,y)
         cabinetContents = ["flour", "baking powder", "sugar", "salt"]
     else:
@@ -82,6 +82,17 @@ def pancake_buttons():
 click_counts = {'place batter': 0, 'flip pancake': 0, 'remove from pan': 0}
 allCooked = False
 
+
+@app.route('/stove_dial_turn', methods=['GET','POST'])
+def turn_dial():
+    data = request.get_json()
+    x = data['x']
+    y = data['y']
+    if (x>565 and x<620 and y>150 and y<204):
+        print(x,y)
+        return jsonify({"turn": True})
+    else:
+        return jsonify({"turn": False})
 
 def check_all(dictionary):
     allCooked = all(value == 3 for value in dictionary.values())
