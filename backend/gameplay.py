@@ -41,35 +41,67 @@ def handle_post():
 class pancake:
     def __init__(self):
         self.recipe = ["milk", "eggs", "butter", "flour", "baking powder", "sugar", "salt"]
-        self.cookedPancake = {'place batter': 3, 'flip pancake2': 3, 'remove from pan': 3}
-        self.pancakeActions = ["place batter", "flip pancake", "remove from pan"]
+        self.cookedPancake = {'place batter': 3, 'flip pancake2': 3, 'remove from pan':3, 'plate pancake': 3}
+        self.pancakeActions = ["place batter", "flip pancake", "remove from pan", "plate pancake"]
+        self.pancakeToppings = ["syrup", "strawberries", "blueberries"]
 
+class chatbox:
+    def __init__(self):
+        self.messages = [
+                {"message": "Your first customer has woken up early craving pancakes. Time to get to work!"}, 
+                {"message": "Grab the following ingredients from the fridge and add them to the bowl: milk, eggs, and butter. Grab the following ingredients from the cabinet and add them to the bowl: flour, baking powder, sugar, and a pinch of salt."},  
+                {"message": "You have successfully added all the ingredients to the bowl. Now its time to mix the ingredients in the bowl."}, 
+                {"message": "Incorrect ingredients have been added to the bowl. Remove the wrong ingredients"}]
 
 
 #instantiating level1
 l1 = pancake()
 
 
+#sending chatbox updates
+@app.route("/messages")
+def get_messages():
+    return jsonify(l1.messages)
+
+
 #creating fridge contents buttons
 @app.route('/fridge_contents')
 def fridge_contents():
-    fridgeContents = ["milk", "eggs", "butter"]
+    fridgeContents = ["milk", "eggs", "butter", "strawberries", "blueberries"]
     return jsonify(fridgeContents)
 
 #creating cabinet contents buttons
 @app.route('/cabinet_contents')
 def cabinet_contents():
-    cabinetContents = ["flour", "baking powder", "sugar", "salt"]
+    cabinetContents = ["flour", "baking powder", "sugar", "salt", "syrup"]
     return jsonify(cabinetContents)
+
+
 bowlIngredients = []
 
-#adding cabinet/fridge contents to a bowl
-@app.route('/ingredients_to_bowl', methods=['POST'])
-def ingredients_to_bowl():
+#adding cabinet/fridge contents to the bowl
+@app.route('/add_bowl_ingredient', methods=['POST'])
+def add_bowl_ingredient():
     data = request.get_json()
     item = data['item']
     bowlIngredients.append(item)
     return jsonify({'status': 'success', 'bowlIngredients': bowlIngredients})
+
+#removing cabinet/fridge contents from the bowl
+@app.route('/remove_bowl_ingredient', methods=['POST'])
+def remove_bowl_ingredient():
+    data = request.get_json()
+    item = data['item']
+    bowlIngredients.remove(item)
+    return jsonify({'status': 'success', 'bowlIngredients': bowlIngredients})
+
+#removing ALL cabinet/fridge contents from the bowl
+@app.route('/remove_all_bowl_ingredients', methods=['POST'])
+def remove_all_bowl_ingredient():
+    bowlIngredients.clear()
+    print(bowlIngredients)
+    return jsonify({'status': 'success', 'bowlIngredients': bowlIngredients})
+
 
 #checking bowl ingredients to mix
 @app.route('/check_bowl_ingredients')
@@ -87,13 +119,12 @@ def pancake_buttons():
 
 
 #click counts dictionary
-click_counts = {'place batter': 0, 'flip pancake': 0, 'remove from pan': 0}
+click_counts = {'place batter': 0, 'flip pancake': 0, 'remove from pan': 0, 'plate pancake': 0}
 allCooked = False
 
 
 def check_all(dictionary):
     allCooked = all(value == 3 for value in dictionary.values())
-    #allCooked = dictionary == l1.cookedPancake
     return allCooked
 
 # tracking clicks
@@ -107,12 +138,22 @@ def track_click():
     print(click_counts)
     return jsonify({'status': 'success'})
 
- 
+#making sure all pancakes are cooked 
 @app.route('/all_pancakes_cooked')
 def all_pancakes_cooked():
     allCooked = check_all(click_counts)
     print(allCooked)
     return jsonify({'cookedStatus': allCooked})
+
+# checking bowl topppings to add to pancakes
+@app.route('/check_bowl_toppings')
+def checking_toppings_ingredients():
+    try:
+        print(bowlIngredients)
+        toppingsPresent = Counter(bowlIngredients) == Counter(l1.pancakeToppings)
+        return jsonify({"toppings": toppingsPresent})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
