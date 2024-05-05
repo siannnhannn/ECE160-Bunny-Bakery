@@ -22,12 +22,10 @@
             </ul>
         </div>
     
-
-        <button id='fridge-contents'>Open Fridge</button>
-        <button id='cabinet-contents'>Open Cabinet</button>
-        <button id='mix-button'>Mix Bowl</button>
-        <button id='check-toppings'>Check Topppings</button>
-        <div id='stove-dial-generated'></div>
+        <div id='main-buttons'></div>
+            <button id='check-toppings'>Check Topppings</button>
+            <div id='stove-dial-generated'></div>
+        </div>
 
 
         <div id="ingredients">
@@ -54,14 +52,18 @@
         <div class="main-content">
             <canvas id="game-frame" width="711" height="540" style="border:3px solid white;"></canvas>           
             <div id="instruction-chatbox" class="center"> 
+                <button id='gameflow'>Start Game</button>
+                <p id="instruction-text">WELCOME</p>
+                <!--
                 <p id="instruction-text">Name your bakery:</p>
                 <div class="inner-container"></div>
-                <input type="text" id="bakeryNameInput" placeholder="૮ ˶ᵔ ᵕ ᵔ˶ ა"/>
+                    <input type="text" id="bakeryNameInput" placeholder="૮ ˶ᵔ ᵕ ᵔ˶ ა"/>
                 <button class="button button-set-name" onclick="setBakeryName()">Set Name</button>
-            </div>
+                </div>
+            -->
             <div id="bakeryNameDisplay"></div>  
-        </div>
-    </div> 
+            </div>
+            </div> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/bbgame.js') }}"></script>
 

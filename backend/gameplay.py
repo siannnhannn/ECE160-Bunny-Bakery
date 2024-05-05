@@ -4,7 +4,6 @@ import time
 import threading
 
 
-
 app = Flask(__name__) 
 
 
@@ -42,21 +41,56 @@ class pancake:
         self.cookedPancake = {'place batter': 3, 'flip pancake2': 3, 'remove from pan':3, 'plate pancake': 3}
         self.pancakeActions = ["place batter", "flip pancake", "remove from pan", "plate pancake"]
         self.pancakeToppings = ["syrup", "strawberries", "blueberries"]
-
-class chatbox:
-    def __init__(self):
         self.messages = [
                 {"message": "Your first customer has woken up early craving pancakes. Time to get to work!"}, 
                 {"message": "Grab the following ingredients from the fridge and add them to the bowl: milk, eggs, and butter. Grab the following ingredients from the cabinet and add them to the bowl: flour, baking powder, sugar, and a pinch of salt."},  
                 {"message": "You have successfully added all the ingredients to the bowl. Now its time to mix the ingredients in the bowl."}, 
-                {"message": "Incorrect ingredients have been added to the bowl. Remove the wrong ingredients"}]
+                {"message": "Incorrect ingredients have been added to the bowl. Add and remove ingredients so that they are correct."}, 
+                {"message": "All of your ingredients have been mixed"},
+                {"message": "Turn on your stove"},
+                {"message": "Place your pan down on the stove"}]
+
+
+
+
+count = 0
+
+#PYTHON STATE MACHINE THAT COMMUNICATES WITH THE FRONT END; THIS IS NOT WORKING YET
+@app.route('/gameflow', methods=['POST'])
+def l1_game_flow():
+    global count
+    data = request.get_json()
+    result = {"message": "", "count": count, "buttonText": ""}
+    if count == 0:
+        result["message"] = "our first customer has woken up early craving pancakes. Time to get to work!"
+        count += 1
+        result["buttonText"] = "next"
+    elif count == 1:
+        result["message"] = "Grab the following ingredients from the fridge and add them to the bowl: milk, eggs, and butter. Grab the following ingredients from the cabinet and add them to the bowl: flour, baking powder, sugar, and a pinch of salt"
+        result["buttonText"] = "next"
+    elif count == 2:
+        result["message"] = "You have successfully added all the ingredients to the bowl. Now its time to mix the ingredients in the bowl."
+        result["buttonText"] = "next"
+    elif count == 3:
+        result["message"] = "Incorrect ingredients have been added to the bowl. Add and remove ingredients so that they are correct."
+        count = 1
+        result["buttonText"] = "prev"
+    elif count == 4:
+        result["message"] = "All of your ingredients have been mixed."
+        count = 4
+        result["buttonText"] = "prev"
+    elif count == 5:
+        result["message"] = "Turn on your stove"
+        count = 6
+        result["buttonText"] = "prev" 
+    return jsonify(result)
 
 
 #instantiating level1
 l1 = pancake()
 
 
-#sending chatbox updates
+#sending chatbox updates (this is called in the javascript state machine)
 @app.route("/messages")
 def get_messages():
     return jsonify(l1.messages)
@@ -177,6 +211,7 @@ def checking_toppings_ingredients():
         return jsonify({"toppings": toppingsPresent})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == '__main__':
