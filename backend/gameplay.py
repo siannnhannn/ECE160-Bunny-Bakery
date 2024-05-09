@@ -511,9 +511,9 @@ def l1_game_flow():
         result["buttonText"] = "Next"
         count = 9
     elif count ==9:
-        result["message"] = "Place toppings on your pancakes"
-        result["buttonText"] = "YOU FINISHED THE GAME"
-        
+        result["message"] = "Place toppings on your pancakes"        
+        result["buttonText"] = "You're done"
+
 
 
     result["mix"] = mix  # Update mix state in the result

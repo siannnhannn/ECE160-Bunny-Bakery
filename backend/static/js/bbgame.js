@@ -260,6 +260,7 @@ function handleGameFlow(count, message, mix) {
     } else if (count==9) {
         const messageBox = document.getElementById("instruction-text");
         messageBox.innerHTML = message;
+        showDiv('check-toppings');
         addToppings();
     }
 }
