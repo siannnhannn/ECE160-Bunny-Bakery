@@ -102,7 +102,7 @@ canvas {
     width: 45vw;
 }
 
-#fridge-contents {
+#open-fridge {
     position: fixed; 
     margin: 16.2% 59.5% auto;
     color: white;
@@ -117,7 +117,7 @@ canvas {
     color: white;
 }
 
-#cabinet-contents{
+#open-cabinet {
     position: fixed;
     margin: 7.4% 38% auto;
     color: white;
@@ -156,7 +156,7 @@ canvas {
 }
 
 #bowl-ingredients {
-    margin: 25% 2% auto;
+    margin: 6.9% 14.5% auto;
     line-height: 1em;
     width: 10vw;
     background-color: #ffacec;
@@ -172,9 +172,9 @@ canvas {
     margin: 18% 5% auto;
 }
 
-#mix-button {
+#check-ingredients {
     position: fixed;
-    margin: 40% 2% auto;
+    margin: 40% 80% auto;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -206,9 +206,7 @@ canvas {
 #cooking-pancake {
     position: fixed;
     margin: 7% 67% auto;
-
 }
-
 
 #place-pan {
     position: fixed; 
@@ -237,4 +235,46 @@ canvas {
     cursor: pointer;
     background-color: #4CAF50;
     color: white;
+}
+
+#end-of-game {
+    position: fixed;
+    margin: 50% 80% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+
+}
+
+#check-toppings {
+    position: fixed;
+    margin: 20% 80% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
+
+#mix-ingredients {
+    position: fixed;
+    margin: 10% 80% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
+
 }

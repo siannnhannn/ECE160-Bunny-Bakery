@@ -75,80 +75,312 @@ window.addEventListener("DOMContentLoaded", () => {
             frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
         } else {
             frameCtx.drawImage(bgCounter, 0, 0, frameCanvas.width, frameCanvas.height);
-            frameCtx.drawImage(pinkSprite, x, y, 100, 100);
+            frameCtx.drawImage(pinkSprite, x, y, 110, 110);
         }
         requestAnimationFrame(update)
     };
     update()
 })
 
-//displaying the contents of the bowl
+
+/*
+
+//chatbox fetching messages from backend and displaying them
+function fetchMessages(messageIndex) {
+    fetch("/messages")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(messages) {
+            const messageBox = document.getElementById("instruction-text");
+            messageBox.innerHTML = messages[messageIndex].message;
+        })
+        .catch(function(error) {
+            console.error("Error fetching messages:", error);
+        });
+}
+
+
+count = 0
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('gameflow').addEventListener('click', function() {
+        if(count==0) {
+            fetchMessages(0)
+            count++
+            const gameflow = document.getElementById('gameflow');
+            gameflow.textContent = "next";
+        } else if (count==1) {
+            gameflow.textContent = "next";
+            fetchMessages(1)
+            fridgeContents();
+            cabinetContents();
+            checkIngredients();
+        } else if (count==2) {
+            gameflow.textContent = "next";
+            fetchMessages(2)
+            mixBowl();
+        } else if (count==3) {
+            fetchMessages(3)
+            count=1;
+            gameflow.textContent = "prev";
+        } else if (count==4) {
+            fetchMessages(4)
+        } else if (count==5) {
+            fetchMessages(5)
+            generateStoveDial()
+            count=6;
+        } else if (count==6) {
+            fetchMessages(6)
+            generatePlacePan()
+        }
+    });
+});
+
+
+/*
+let count = 0
+
+//THIS IS VERSION 2 OF THE JAVSCRIPT STATE MACHINE IMPLEMENTATION
+// Set up the event listener after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('gameflow').addEventListener('click', handleGameFlow();
+});
+
+// Main game flow logic
+function handleGameFlow() {
+    const gameflow = document.getElementById('gameflow');
+    switch (count) {
+        case 0:
+            fetchMessages(0);
+            count++;
+            gameflow.textContent = "next";
+            break;
+        case 1:
+            fetchMessages(1);
+            fridgeContents();
+            cabinetContents();
+            checkIngredients();
+            gameflow.textContent = "next";
+            break;
+        case 2:
+            fetchMessages(2);
+            mixBowl();
+            gameflow.textContent = "next";
+            break;
+        case 3:
+            fetchMessages(3);
+            count = 1;
+            gameflow.textContent = "prev";
+            break;
+        case 4:
+            fetchMessages(4);
+            break;
+        case 5:
+            fetchMessages(5);
+            generateStoveDial();
+            count = 6;
+            break;
+        case 6:
+            fetchMessages(6);
+            generatePlacePan();
+            break;
+        default:
+            console.log("Invalid count value");
+    }
+}
+
+
+
+*/
+//THIS IS THE STATE MACHINE IMPLEMENTATION COMMUNICAATING WITH PYTHON: THIS IS NOT WORKING YET
+let count = 0;
+let mix = false;
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('gameflow').addEventListener('click', handleGameFlowBackend);
+});
+
+function handleGameFlowBackend() {
+    fetch('/gameflow', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({count: count})
+    }).then(response => response.json())
+    .then(data => {
+        const gameflow = document.getElementById('gameflow');
+        console.log("Response from server:", data);
+        gameflow.textContent = data.buttonText;
+        count = data.count;
+        message = data.message;
+        mix = data.mix;
+        handleGameFlow(count, message, mix);
+    }).catch(error => console.error('Error:', error));
+}
+
+
+//will call functions along with gameflow backend: this will actually implement the functions in the game
+function handleGameFlow(count, message, mix) {
+    if(count==0) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+    } else if (count==1) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+    } else if (count==2) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+        fridgeContents();
+        cabinetContents();
+    } else if (count==3) {
+        const messageBox = document.getElementById("instruction-text");
+        removeAllBowlIngredients();
+        messageBox.innerHTML = message;
+    } else if (count==4) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+        mixBowl();
+    } else if (count==5) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+    } else if (count==6) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+        generateStoveDial();
+    } else if (count==7) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+        pancakeNextClicked();
+    } else if (count==8) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+    } else if (count==9) {
+        const messageBox = document.getElementById("instruction-text");
+        messageBox.innerHTML = message;
+        showDiv('check-toppings');
+        addToppings();
+    }
+}
+
+
+// Displaying the contents of the bowl on add ingredient button press
 function displayBowlContents(item) {
     const container = document.getElementById('bowl-container');
     const ingredient = document.createElement('div');
+    ingredient.id = item;
     ingredient.textContent = item;
     container.appendChild(ingredient);
 }
 
+// Removing contents of the bowl on remove ingredient button press
+function removeBowlContents(item) {
+    const container = document.getElementById('bowl-container');
+    const ingredient = document.getElementById(item);
+    if (ingredient) {
+        container.removeChild(ingredient); 
+    } else {
+        console.warn(`No element found with ID ${item}`);
+    }
+}
 
-//refridgerator ingredient buttons and adding ingredients to a bowl
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('fridge-contents').addEventListener('click', function() {
+
+function fridgeContents() {
+    const container1 = document.getElementById('main-buttons');
+    const openFridgeButton = document.createElement('button');
+    openFridgeButton.textContent = "Open Fridge";
+    openFridgeButton.id = "open-fridge";
+    container1.appendChild(openFridgeButton);
+
+    openFridgeButton.addEventListener('click', function() {
         fetch('/fridge_contents', {
-		method: 'POST',
-		headers: {
-		    'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ x: x , y: y })
-	
-	})
-            .then(response => response.json())
-            .then(data => {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ x: x, y: y })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.signal) {
                 const container = document.getElementById('fridge-container');
                 container.innerHTML = '';
-                data.forEach(item => {
-                    const ingredient = document.createElement('button');
-                    ingredient.textContent = item;
-                    ingredient.onclick = function() {
+
+                data.fridgeContents.forEach(item => {
+                    const ingredientButton = document.createElement('button');
+                    const removeIngredientButton = document.createElement('button');
+                    ingredientButton.textContent = `Add ${item}`;
+                    removeIngredientButton.textContent = `Remove ${item}`;
+
+                    ingredientButton.onclick = function() {
                         displayBowlContents(item);
-                        fetch('/ingredients_to_bowl', {
+                        fetch('/add_bowl_ingredient', {
                             method: 'POST',
-                            headers: {  
-                                'Content-Type': 'application/json'
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ item: item })
                         })
                         .then(response => response.json())
                         .then(data => console.log(data))
                     };
-                    container.appendChild(ingredient);
+                    container.appendChild(ingredientButton);
+
+                    removeIngredientButton.onclick = function() {
+                        console.log('Remove button clicked');
+                        removeBowlContents(item);
+                        fetch('/remove_bowl_ingredient', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ item: item })
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                    };
+                    container.appendChild(removeIngredientButton);
                 });
-            })
-            .catch(error => console.error('Error fetching fridge contents:', error));
+            } else {
+                alert("Can't reach the fridge");
+            }
+        })
+        .catch(error => console.error('Error fetching fridge contents:', error));
     });
-});
+}
 
-//generating cabinet ingredients buttons and adding cabinet ingredients to a bowl
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('cabinet-contents').addEventListener('click', function() {
-    fetch('/cabinet_contents',{
-	    method: 'POST',
-	    headers: {
-		    'Content-Type': 'application/json'
-	    },
-	    body: JSON.stringify({ x: x , y: y })
 
-    })
+// Function to handle the display and interaction with cabinet contents
+function cabinetContents() {
+    const container2 = document.getElementById('main-buttons');
+    const openCabinetButton = document.createElement('button');
+    openCabinetButton.textContent = "Open Cabinet";
+    openCabinetButton.id = "open-cabinet";
+    container2.appendChild(openCabinetButton);
+
+    openCabinetButton.addEventListener('click', function() {
+        fetch('/cabinet_contents', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ x: x, y: y }) // Ensure x and y are defined somewhere
+        })
         .then(response => response.json())
         .then(data => {
-            const container = document.getElementById('cabinet-container');
-            container.innerHTML = '';
-            data.forEach(item => {
-                    const ingredient = document.createElement('button');
-                    ingredient.textContent = item;
-                    ingredient.onclick = function() {
+            if (data.signal) {
+                const container = document.getElementById('cabinet-container');
+                container.innerHTML = ''; // Clears previous contents
+
+                data.cabinetContents.forEach(item => {
+                    const ingredientButton = document.createElement('button');
+                    const removeIngredientButton = document.createElement('button');
+                    
+                    ingredientButton.textContent = `Add ${item}`;
+                    removeIngredientButton.textContent = `Remove ${item}`;
+
+                    // Function to add ingredient to the bowl
+                    ingredientButton.onclick = function() {
                         displayBowlContents(item);
-                        fetch('/ingredients_to_bowl', {
+                        fetch('/add_bowl_ingredient', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -156,32 +388,92 @@ document.addEventListener('DOMContentLoaded', function() {
                             body: JSON.stringify({ item: item })
                         })
                         .then(response => response.json())
-                        .then(data => console.log(data))
+                        .then(data => console.log(data));
                     };
-                    container.appendChild(ingredient);
+                    container.appendChild(ingredientButton);
+
+                    // Function to remove ingredient from the bowl
+                    removeIngredientButton.onclick = function() {
+                        console.log('Remove button clicked');
+                        removeBowlContents(item);
+                        fetch('/remove_bowl_ingredient', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ item: item })
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data));
+                    };
+                    container.appendChild(removeIngredientButton);
                 });
-            })
-            .catch(error => console.error('Error fetching fridge contents:', error));
- aaaaaaa   });
-});
-
-//Mixing ingredients in the bowl
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('mix-button').addEventListener('click', function() {
-        fetch('/check_bowl_ingredients')
-            .then(response => response.json())
-            .then(data => {
-               if (data.mix) {
-                   generateStoveDial();
-                   //alert('Mixing ingredient in bowl');
-               } else {
-                    alert('Incorrect ingredients');
-                }
-            })
-            .catch(error => console.error('Error fetching ingredients:', error));
+            } else {
+                alert("Can't reach the cabinet");
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching cabinet contents:', error);
+            alert('Failed to load cabinet contents. Please try again.');
+        });
     });
-});
+}
 
+//clearing all the ingredients in the bowl
+function removeAllBowlIngredients() {
+    const container = document.getElementById('bowl-container');
+    container.innerHTML = '';
+        fetch('/remove_all_bowl_ingredients', {
+        method: 'POST',
+        headers: {  
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+}
+
+
+
+// Mixing ingredients in the bowl
+function checkIngredients(mix) {
+    const container = document.getElementById('main-buttons');
+    const checkIngredientsButton = document.createElement('button');
+    checkIngredientsButton.textContent = "Check Ingredients";
+    checkIngredientsButton.id = "check-ingredients";
+    container.appendChild(checkIngredientsButton);
+
+    checkIngredientsButton.addEventListener('click', function() {
+        if (mix) {
+            removeAllBowlIngredients();
+            alert('Correct Ingredients');
+        } else {
+            alert('Incorrect ingredients');
+        }
+    });
+}
+
+
+function mixBowl() {
+    const container = document.getElementById('main-buttons');
+    const mixBowlButton = document.createElement('button');
+    mixBowlButton.textContent = "Mix Ingredients";
+    mixBowlButton.id = "mix-ingredients";
+    container.appendChild(mixBowlButton);
+
+    mixBowlButton.addEventListener('click', function() {
+        alert("Mixing ingredients in bowl")
+
+        fetch('/bowl_is_mixed', {
+        method: 'POST',
+        headers: {  
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    });
+}
 
 //generating and turning the stove dial
 function generateStoveDial() {
@@ -238,7 +530,7 @@ function turnDial() {
 
 }
 
-
+/*
 // Generating the 'Place Pan' button
 function generatePlacePan() {
     const placePan = document.createElement('button');
@@ -248,7 +540,7 @@ function generatePlacePan() {
     container1.appendChild(placePan);
 
     placePan.addEventListener('click', function() {
-        showDiv(); // This function needs to be defined somewhere in your code
+        showDiv('pancake-actions-container');
         fetch('/pancake_buttons')
             .then(response => response.json())
             .then(data => {
@@ -268,6 +560,60 @@ function generatePlacePan() {
                 console.error('Error fetching pancake actions', error);
             });
     });
+}
+*/
+
+
+// Function to generate the 'Place Pan' button
+function generatePlacePan() {
+    const placePan = document.createElement('button');
+    placePan.textContent = "Place Pan";
+    placePan.id = "place-pan";
+    const container1 = document.getElementById('cooking-pancake');
+    container1.appendChild(placePan);
+
+    placePan.addEventListener('click', function() {
+        fetch('/pancake_actions_signal', {
+            method: 'POST',
+            headers: {  
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())  // Process the JSON response from the server
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Pancake pan placed successfully', data);
+            } else {
+                throw new Error('Failed to place pancake pan');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+}
+
+
+
+// Function to handle the 'Next' button click for pancakesfunction 
+function pancakeNextClicked() {
+    showDiv('pancake-actions-container');
+    fetch('/pancake_buttons')
+        .then(response => response.json())
+        .then(data => {
+            const container2 = document.getElementById('pancake-actions-container');
+            container2.innerHTML = ''; // Clear previous buttons
+            data.forEach(action => {
+                const actionButton = document.createElement('button');
+                actionButton.textContent = action;
+                actionButton.onclick = function() {
+                    countingActions(actionButton.textContent);
+                    areWeCooked();
+                };
+                container2.appendChild(actionButton);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching pancake actions:', error);
+        });
 }
 
 
@@ -297,7 +643,8 @@ function areWeCooked() {
     .then(data => {
         if (data.cookedStatus) {
             // Plate the pancakes
-            console.log("All pancakes are cooked. Plating the pancakes...");
+            console.log("Pancakes are done cooking.");
+            addToppings();
         } else {
             console.log("Pancakes are not all cooked.");
         }
@@ -307,9 +654,43 @@ function areWeCooked() {
     });
 }
 
+//add syrup and fruits to the pancake
+function addToppings() {
+    document.getElementById('check-toppings').addEventListener('click', function() {
+        fetch('/check_bowl_toppings')
+            .then(response => response.json())
+            .then(data => {
+                if (data.toppings) {
+                    // chatbox message
+                    generateLevelFinishButton(); 
+                } else {
+                    alert('Incorrect toppings');
+                }
+            })
+            .catch(error => console.error('Error fetching ingredients:', error));
+    });
+}
 
-function showDiv() {
-    var div = document.getElementById('pancake-actions-container');
+function generateLevelFinishButton() {
+    const finishedButton = document.createElement('button')
+    finishedButton.textContent = "Finish Game"
+    finishedButton.id = "finished-button"
+    const container = document.getElementById('end-of-game');
+    container.appendChild(finishedButton);
+    alert('YOU HAVE FINISHED THE LEVEL GOOD JOB!!!!!!!!');
+
+}
+
+
+function showDiv(divName) {
+    var div = document.getElementById(divName);
     div.style.opacity = 1;
     div.style.transition = "opacity 0.5s";
 }
+
+function hideDiv(divName) {
+    var div = document.getElementById(divName);
+    div.style.opacity = 0;
+    div.style.transition = "opacity 0.5s";
+}
+
