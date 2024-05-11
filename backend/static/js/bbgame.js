@@ -82,7 +82,6 @@ window.addEventListener("DOMContentLoaded", () => {
     update()
 })
 
-
 //STATE MACHINE IMPLEMENTATION COMMUNICAATING WITH PYTHON
 let count = 0;
 let mix = false;
@@ -109,7 +108,6 @@ function handleGameFlowBackend() {
         handleGameFlow(count, message, mix);
     }).catch(error => console.error('Error:', error));
 }
-
 
 //Call functions along with gameflow backend: this will actually implement the functions in the game
 function handleGameFlow(count, message, mix) {
@@ -174,7 +172,7 @@ function removeBowlContents(item) {
     }
 }
 
-// Function to handle the display and interaction with fridge contents
+// Function to handle the display and interaction with fridge contents// Function to handle the display and interaction with fridge contents
 function fridgeContents() {
     const container1 = document.getElementById('main-buttons');
     const openFridgeButton = document.createElement('button');
@@ -348,7 +346,7 @@ function checkIngredients(mix) {
     });
 }
 
-//call and output mixing message of bowl
+//call from backend and output message bowl mixing
 function mixBowl() {
     const container = document.getElementById('main-buttons');
     const mixBowlButton = document.createElement('button');
