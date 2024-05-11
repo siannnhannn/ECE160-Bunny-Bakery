@@ -172,7 +172,7 @@ function removeBowlContents(item) {
     }
 }
 
-// Function to handle the display and interaction with fridge contents
+// Function to handle the display and interaction with fridge contents// Function to handle the display and interaction with fridge contents
 function fridgeContents() {
     const container1 = document.getElementById('main-buttons');
     const openFridgeButton = document.createElement('button');
@@ -369,7 +369,7 @@ function mixBowl() {
     });
 }
 
-//generating and the stove dial
+//generating the stove dial
 function generateStoveDial() {
     const dialButton = document.createElement('button')
     dialButton.textContent = "Dial Button"
@@ -410,7 +410,7 @@ function generateStoveDial() {
     });
 }
 
-//turning stove dial
+//Function for dial turning when mouse holds
 function turnDial() {
     const button = document.getElementById('dial-button');
     button.degrees = button.degrees || 0; 
@@ -483,9 +483,8 @@ function pancakeNextClicked() {
         });
 }
 
-// Send a click of an action to the Python side
+// Send instance of button click to python backend
 function countingActions(actionButton) {
-    // Send instance of button click to python backend
     const buttonId = actionButton.id;
     fetch('/counting_pancake_actions', {
         method: "POST",
@@ -501,8 +500,8 @@ function countingActions(actionButton) {
     });
 }
 
+// Receive instance of all pancakes cooked from python backend
 function areWeCooked() {
-    // Receive instance of all pancakes cooked from python backend
     fetch('/all_pancakes_cooked')
     .then(response => response.json())
     .then(data => {
