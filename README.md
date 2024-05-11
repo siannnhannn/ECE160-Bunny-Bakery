@@ -25,3 +25,4 @@ Notes:
 - wasn't able to compute database
 - screen size of the game might be different for different laptop, in order to show full screen, suggested to zoom out on the website, if the format is messed up, suggested open inspect
 - features such as new levels will be computed in upcoming updates
+- logics are in gameplay.py, bbgame.html, and bbgame.js
