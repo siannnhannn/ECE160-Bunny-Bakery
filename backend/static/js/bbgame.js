@@ -228,8 +228,13 @@ function fridgeContents() {
                     };
                     container.appendChild(removeIngredientButton);
                 });
+
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "";
+
             } else {
-                alert("Can't reach the fridge");
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "Can't reach the fridge";
             }
         })
         .catch(error => console.error('Error fetching fridge contents:', error));
@@ -297,8 +302,13 @@ function cabinetContents() {
                     };
                     container.appendChild(removeIngredientButton);
                 });
+
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "";
+
             } else {
-                alert("Can't reach the cabinet");
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "Can't reach the cabinet";
             }
         })
         .catch(error => {
@@ -536,7 +546,7 @@ function addToppings() {
             .catch(error => console.error('Error fetching toppings:', error));
     });
 }
-
+/*
 function generateLevelFinishButton() {
     const finishedButton = document.createElement('button')
     finishedButton.textContent = "Finish Game"
@@ -546,7 +556,7 @@ function generateLevelFinishButton() {
     alert('YOU HAVE FINISHED THE LEVEL GOOD JOB!!!!!!!!');
 
 }
-
+*/
 
 function showDiv(divName) {
     var div = document.getElementById(divName);
