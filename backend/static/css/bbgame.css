@@ -172,6 +172,17 @@ canvas {
     margin: 18% 5% auto;
 }
 
+#message {
+    position: fixed;
+    margin: 1% 50% auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #ffacec;
+    color: white;
+}
+
 #check-ingredients {
     position: fixed;
     margin: 40% 80% auto;
@@ -277,4 +288,4 @@ canvas {
     color: white;
 }
 
-}
+
