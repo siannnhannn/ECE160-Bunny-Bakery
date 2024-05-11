@@ -181,7 +181,7 @@ def all_pancakes_cooked():
     print(allCooked)
     return jsonify({'cookedStatus': allCooked})
 
-# checking bowl topppings to add to pancakes
+# checking bowl toppings to add to pancakes
 @app.route('/check_bowl_toppings')
 def checking_toppings_ingredients():
     try:
@@ -229,7 +229,7 @@ def l1_game_flow():
         result["buttonText"] = "Next"
         count=4
     elif count == 4:
-        print(mixed)
+        print(mixed) #**
         if mixed:
             result["message"] = "You have successfully mixed all the ingredients in the bowl."
             result["buttonText"] = "Next"
@@ -487,7 +487,7 @@ def l1_game_flow():
             result["buttonText"] = "Prev"
             count = 3
     elif count == 5:
-        result["message"] = " Now you must turn on your stove and place down your pan."
+        result["message"] = " Now you must turn on your stove (hold the dial!) and place down your pan."
         result["buttonText"] = "Next"
         count = 6
     elif count ==6:
@@ -499,20 +499,21 @@ def l1_game_flow():
         else: 
             result["message"] = "You have not yet placed your pan on the stove."
             result["buttonText"] = "Prev"
-            count = 6
-        result["buttonText"] = "Next"
+            count = 5
     elif count == 7:
-        result["message"] = "Complete the pancake actions to cook your pancakes."
+        result["message"] = "Complete all pancake actions 3 times to cook all your pancakes."
         result["buttonText"] = "Next"
         if allCooked:
             count = 8
+        else:
+            count = 7
     elif count == 8:
         result["message"] = "Your pancakes are finished cooking"
         result["buttonText"] = "Next"
         count = 9
     elif count ==9:
-        result["message"] = "Place toppings on your pancakes"        
-        result["buttonText"] = "You're done"
+        result["message"] = "Place toppings on your pancakes(strawberries, blueberries, syrup)"        
+        result["buttonText"] = "You're done!"
 
 
 

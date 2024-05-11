@@ -83,118 +83,7 @@ window.addEventListener("DOMContentLoaded", () => {
 })
 
 
-/*
-
-//chatbox fetching messages from backend and displaying them
-function fetchMessages(messageIndex) {
-    fetch("/messages")
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(messages) {
-            const messageBox = document.getElementById("instruction-text");
-            messageBox.innerHTML = messages[messageIndex].message;
-        })
-        .catch(function(error) {
-            console.error("Error fetching messages:", error);
-        });
-}
-
-
-count = 0
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('gameflow').addEventListener('click', function() {
-        if(count==0) {
-            fetchMessages(0)
-            count++
-            const gameflow = document.getElementById('gameflow');
-            gameflow.textContent = "next";
-        } else if (count==1) {
-            gameflow.textContent = "next";
-            fetchMessages(1)
-            fridgeContents();
-            cabinetContents();
-            checkIngredients();
-        } else if (count==2) {
-            gameflow.textContent = "next";
-            fetchMessages(2)
-            mixBowl();
-        } else if (count==3) {
-            fetchMessages(3)
-            count=1;
-            gameflow.textContent = "prev";
-        } else if (count==4) {
-            fetchMessages(4)
-        } else if (count==5) {
-            fetchMessages(5)
-            generateStoveDial()
-            count=6;
-        } else if (count==6) {
-            fetchMessages(6)
-            generatePlacePan()
-        }
-    });
-});
-
-
-/*
-let count = 0
-
-//THIS IS VERSION 2 OF THE JAVSCRIPT STATE MACHINE IMPLEMENTATION
-// Set up the event listener after the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('gameflow').addEventListener('click', handleGameFlow();
-});
-
-// Main game flow logic
-function handleGameFlow() {
-    const gameflow = document.getElementById('gameflow');
-    switch (count) {
-        case 0:
-            fetchMessages(0);
-            count++;
-            gameflow.textContent = "next";
-            break;
-        case 1:
-            fetchMessages(1);
-            fridgeContents();
-            cabinetContents();
-            checkIngredients();
-            gameflow.textContent = "next";
-            break;
-        case 2:
-            fetchMessages(2);
-            mixBowl();
-            gameflow.textContent = "next";
-            break;
-        case 3:
-            fetchMessages(3);
-            count = 1;
-            gameflow.textContent = "prev";
-            break;
-        case 4:
-            fetchMessages(4);
-            break;
-        case 5:
-            fetchMessages(5);
-            generateStoveDial();
-            count = 6;
-            break;
-        case 6:
-            fetchMessages(6);
-            generatePlacePan();
-            break;
-        default:
-            console.log("Invalid count value");
-    }
-}
-
-
-
-*/
-//THIS IS THE STATE MACHINE IMPLEMENTATION COMMUNICAATING WITH PYTHON: THIS IS NOT WORKING YET
+//STATE MACHINE IMPLEMENTATION COMMUNICAATING WITH PYTHON
 let count = 0;
 let mix = false;
 
@@ -462,7 +351,8 @@ function mixBowl() {
     container.appendChild(mixBowlButton);
 
     mixBowlButton.addEventListener('click', function() {
-        alert("Mixing ingredients in bowl")
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = "Mixing ingredients in bowl";
 
         fetch('/bowl_is_mixed', {
         method: 'POST',
@@ -482,6 +372,8 @@ function generateStoveDial() {
     dialButton.id = "dial-button";
     const container = document.getElementById('stove-dial-generated');
     container.appendChild(dialButton);
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = "";
 
     dialButton.addEventListener('mousedown', function() {
 	    fetch('/stove_dial_turn',{
@@ -497,7 +389,8 @@ function generateStoveDial() {
 				turnDial();
 			}
 			else{
-				alert("Can't reach stove");
+				const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "Can't reach stove";
 			}
        
     		})
@@ -513,56 +406,28 @@ function generateStoveDial() {
     });
 }
 
+
 function turnDial() {
-    	const button = document.getElementById('dial-button');
-	button.degrees = button.degrees || 0; 
-        button.interval = setInterval(() => {
-            if (button.degrees < 270) {
-                button.degrees += 5;
-                button.style.transform = `rotate(${button.degrees}deg)`;
-            } else {
-                button.degrees = 270;
-                button.style.transform = `rotate(${button.degrees}deg)`;
-                generatePlacePan();
-                clearInterval(button.interval);
-            }
-        }, 50);	
+    const button = document.getElementById('dial-button');
+    button.degrees = button.degrees || 0; 
+    button.interval = setInterval(() => {
+        if (button.degrees < 270) {
+            button.degrees += 5;
+            button.style.transform = `rotate(${button.degrees}deg)`;
+        } else {
+            button.degrees = 270;
+            button.style.transform = `rotate(${button.degrees}deg)`;
+            generatePlacePan();
+            clearInterval(button.interval);
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = "";
+        }
+    }, 50);
 
+    button.addEventListener('mouseup', function() {
+        clearInterval(button.interval);
+    }); 
 }
-
-/*
-// Generating the 'Place Pan' button
-function generatePlacePan() {
-    const placePan = document.createElement('button');
-    placePan.textContent = "Place Pan";
-    placePan.id = "place-pan";
-    const container1 = document.getElementById('cooking-pancake');
-    container1.appendChild(placePan);
-
-    placePan.addEventListener('click', function() {
-        showDiv('pancake-actions-container');
-        fetch('/pancake_buttons')
-            .then(response => response.json())
-            .then(data => {
-                const container2 = document.getElementById('pancake-actions-container');
-                container2.innerHTML = '';
-                data.forEach(action => {
-                    const actionButton = document.createElement('button');
-                    actionButton.textContent = action;
-                    actionButton.onclick = function() {
-                        countingActions(actionButton.textContent);
-                        areWeCooked();
-                    };
-                    container2.appendChild(actionButton);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching pancake actions', error);
-            });
-    });
-}
-*/
-
 
 // Function to generate the 'Place Pan' button
 function generatePlacePan() {
@@ -654,20 +519,21 @@ function areWeCooked() {
     });
 }
 
-//add syrup and fruits to the pancake
+// Add syrup and fruits to the pancake
 function addToppings() {
     document.getElementById('check-toppings').addEventListener('click', function() {
         fetch('/check_bowl_toppings')
             .then(response => response.json())
             .then(data => {
                 if (data.toppings) {
-                    // chatbox message
-                    generateLevelFinishButton(); 
+                    const messageDiv = document.getElementById('message');
+                    messageDiv.textContent = 'Syrup and fruits added to the pancake!';
                 } else {
-                    alert('Incorrect toppings');
+                    const messageDiv = document.getElementById('message');
+                    messageDiv.textContent = 'Incorrect toppings';
                 }
             })
-            .catch(error => console.error('Error fetching ingredients:', error));
+            .catch(error => console.error('Error fetching toppings:', error));
     });
 }
 
@@ -693,4 +559,3 @@ function hideDiv(divName) {
     div.style.opacity = 0;
     div.style.transition = "opacity 0.5s";
 }
-

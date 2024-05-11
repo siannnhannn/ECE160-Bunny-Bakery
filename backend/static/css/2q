@@ -168,6 +168,19 @@ canvas {
     border-style: solid;
 }
 
+#pancake-cooking-count {
+    margin: 25% 2% auto;
+    line-height: 1em;
+    width: 10vw;
+    background-color: #ffacec;
+    padding: 5px;
+    color: white;
+    position: fixed;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+}
+
 #bowl-container {
     margin: 18% 5% auto;
 }
