@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const frameCanvas = document.getElementById("game-frame");
     const frameCtx = frameCanvas.getContext("2d");
    
-       //drawing background
+    //drawing background
     const bgImg = new Image();
     bgImg.src = 'static/img/BUNNYBAKERY.png';
     bgImg.onload = function() {
@@ -111,7 +111,7 @@ function handleGameFlowBackend() {
 }
 
 
-//will call functions along with gameflow backend: this will actually implement the functions in the game
+//Call functions along with gameflow backend: this will actually implement the functions in the game
 function handleGameFlow(count, message, mix) {
     if(count==0) {
         const messageBox = document.getElementById("instruction-text");
@@ -154,7 +154,6 @@ function handleGameFlow(count, message, mix) {
     }
 }
 
-
 // Displaying the contents of the bowl on add ingredient button press
 function displayBowlContents(item) {
     const container = document.getElementById('bowl-container');
@@ -175,7 +174,7 @@ function removeBowlContents(item) {
     }
 }
 
-
+// Function to handle the display and interaction with fridge contents
 function fridgeContents() {
     const container1 = document.getElementById('main-buttons');
     const openFridgeButton = document.createElement('button');
@@ -228,14 +227,18 @@ function fridgeContents() {
                     };
                     container.appendChild(removeIngredientButton);
                 });
+
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "";
+
             } else {
-                alert("Can't reach the fridge");
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "Can't reach the fridge";
             }
         })
         .catch(error => console.error('Error fetching fridge contents:', error));
     });
 }
-
 
 // Function to handle the display and interaction with cabinet contents
 function cabinetContents() {
@@ -297,8 +300,13 @@ function cabinetContents() {
                     };
                     container.appendChild(removeIngredientButton);
                 });
+
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "";
+
             } else {
-                alert("Can't reach the cabinet");
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = "Can't reach the cabinet";
             }
         })
         .catch(error => {
@@ -322,8 +330,6 @@ function removeAllBowlIngredients() {
     .then(data => console.log(data))
 }
 
-
-
 // Mixing ingredients in the bowl
 function checkIngredients(mix) {
     const container = document.getElementById('main-buttons');
@@ -342,7 +348,7 @@ function checkIngredients(mix) {
     });
 }
 
-
+//call and output mixing message of bowl
 function mixBowl() {
     const container = document.getElementById('main-buttons');
     const mixBowlButton = document.createElement('button');
@@ -365,7 +371,7 @@ function mixBowl() {
     });
 }
 
-//generating and turning the stove dial
+//generating the stove dial
 function generateStoveDial() {
     const dialButton = document.createElement('button')
     dialButton.textContent = "Dial Button"
@@ -406,7 +412,7 @@ function generateStoveDial() {
     });
 }
 
-
+//Function for dial turning when mouse holds
 function turnDial() {
     const button = document.getElementById('dial-button');
     button.degrees = button.degrees || 0; 
@@ -456,8 +462,6 @@ function generatePlacePan() {
     });
 }
 
-
-
 // Function to handle the 'Next' button click for pancakesfunction 
 function pancakeNextClicked() {
     showDiv('pancake-actions-container');
@@ -481,10 +485,8 @@ function pancakeNextClicked() {
         });
 }
 
-
-// Send a click of an action to the Python side
+// Send instance of button click to python backend
 function countingActions(actionButton) {
-    // Send instance of button click to python backend
     const buttonId = actionButton.id;
     fetch('/counting_pancake_actions', {
         method: "POST",
@@ -500,9 +502,8 @@ function countingActions(actionButton) {
     });
 }
 
-
+// Receive instance of all pancakes cooked from python backend
 function areWeCooked() {
-    // Receive instance of all pancakes cooked from python backend
     fetch('/all_pancakes_cooked')
     .then(response => response.json())
     .then(data => {
@@ -536,17 +537,6 @@ function addToppings() {
             .catch(error => console.error('Error fetching toppings:', error));
     });
 }
-
-function generateLevelFinishButton() {
-    const finishedButton = document.createElement('button')
-    finishedButton.textContent = "Finish Game"
-    finishedButton.id = "finished-button"
-    const container = document.getElementById('end-of-game');
-    container.appendChild(finishedButton);
-    alert('YOU HAVE FINISHED THE LEVEL GOOD JOB!!!!!!!!');
-
-}
-
 
 function showDiv(divName) {
     var div = document.getElementById(divName);
