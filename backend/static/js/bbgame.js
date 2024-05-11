@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const frameCanvas = document.getElementById("game-frame");
     const frameCtx = frameCanvas.getContext("2d");
    
-       //drawing background
+    //drawing background
     const bgImg = new Image();
     bgImg.src = 'static/img/BUNNYBAKERY.png';
     bgImg.onload = function() {
@@ -82,7 +82,6 @@ window.addEventListener("DOMContentLoaded", () => {
     update()
 })
 
-
 //STATE MACHINE IMPLEMENTATION COMMUNICAATING WITH PYTHON
 let count = 0;
 let mix = false;
@@ -110,8 +109,7 @@ function handleGameFlowBackend() {
     }).catch(error => console.error('Error:', error));
 }
 
-
-//will call functions along with gameflow backend: this will actually implement the functions in the game
+//Call functions along with gameflow backend: this will actually implement the functions in the game
 function handleGameFlow(count, message, mix) {
     if(count==0) {
         const messageBox = document.getElementById("instruction-text");
@@ -154,7 +152,6 @@ function handleGameFlow(count, message, mix) {
     }
 }
 
-
 // Displaying the contents of the bowl on add ingredient button press
 function displayBowlContents(item) {
     const container = document.getElementById('bowl-container');
@@ -175,7 +172,7 @@ function removeBowlContents(item) {
     }
 }
 
-
+// Function to handle the display and interaction with fridge contents
 function fridgeContents() {
     const container1 = document.getElementById('main-buttons');
     const openFridgeButton = document.createElement('button');
@@ -240,7 +237,6 @@ function fridgeContents() {
         .catch(error => console.error('Error fetching fridge contents:', error));
     });
 }
-
 
 // Function to handle the display and interaction with cabinet contents
 function cabinetContents() {
@@ -332,8 +328,6 @@ function removeAllBowlIngredients() {
     .then(data => console.log(data))
 }
 
-
-
 // Mixing ingredients in the bowl
 function checkIngredients(mix) {
     const container = document.getElementById('main-buttons');
@@ -352,7 +346,7 @@ function checkIngredients(mix) {
     });
 }
 
-
+//call from backend and output message bowl mixing
 function mixBowl() {
     const container = document.getElementById('main-buttons');
     const mixBowlButton = document.createElement('button');
@@ -375,7 +369,7 @@ function mixBowl() {
     });
 }
 
-//generating and turning the stove dial
+//generating and the stove dial
 function generateStoveDial() {
     const dialButton = document.createElement('button')
     dialButton.textContent = "Dial Button"
@@ -416,7 +410,7 @@ function generateStoveDial() {
     });
 }
 
-
+//turning stove dial
 function turnDial() {
     const button = document.getElementById('dial-button');
     button.degrees = button.degrees || 0; 
@@ -466,8 +460,6 @@ function generatePlacePan() {
     });
 }
 
-
-
 // Function to handle the 'Next' button click for pancakesfunction 
 function pancakeNextClicked() {
     showDiv('pancake-actions-container');
@@ -491,7 +483,6 @@ function pancakeNextClicked() {
         });
 }
 
-
 // Send a click of an action to the Python side
 function countingActions(actionButton) {
     // Send instance of button click to python backend
@@ -509,7 +500,6 @@ function countingActions(actionButton) {
         console.error('Error:', error);
     });
 }
-
 
 function areWeCooked() {
     // Receive instance of all pancakes cooked from python backend
@@ -546,17 +536,6 @@ function addToppings() {
             .catch(error => console.error('Error fetching toppings:', error));
     });
 }
-/*
-function generateLevelFinishButton() {
-    const finishedButton = document.createElement('button')
-    finishedButton.textContent = "Finish Game"
-    finishedButton.id = "finished-button"
-    const container = document.getElementById('end-of-game');
-    container.appendChild(finishedButton);
-    alert('YOU HAVE FINISHED THE LEVEL GOOD JOB!!!!!!!!');
-
-}
-*/
 
 function showDiv(divName) {
     var div = document.getElementById(divName);
