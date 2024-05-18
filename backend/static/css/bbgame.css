@@ -21,27 +21,32 @@ body, h1, a {
 }
 
 #instruction-chatbox {
-  position: relative;
-  width: 45%;
-  height: 80px;
-  background-color: #FEABEF;
-  color: white;
-  padding: 10px;
-  border-radius: 20px;
-  border-width: 3px;
-  border-style: solid;
-  border-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0.5% auto;
-
+    display: flex;           /* Enables flexbox layout */
+    align-items: center;     /* Aligns children vertically in the middle */
+    justify-content: flex-start; /* Aligns children at the start of the container */
+    padding: 10px;
+    background-color: #FEABEF;
+    color: white;
+    border-radius: 20px;
+    border: 3px solid white;
+    width: 45%;
+    height: 80px;
+    margin: 0.5% auto;
 }
 
-#instruction-text{
+#instruction-text {
     text-align: left;
-    top: 0;
-    left: 0;
+    flex-grow: 1;            /* Allows the text to expand and push the button to the right */
+}
+
+#gameflow {
+    text-align: center;      /* Centers the text inside the button */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;         /* Indicates the element is clickable */
 }
 
 #bakeryNameDisplay {
@@ -290,5 +295,4 @@ canvas {
     background-color: #4CAF50;
     color: white;
 }
-
 

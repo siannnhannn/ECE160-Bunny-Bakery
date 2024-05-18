@@ -64,7 +64,7 @@ mix = False
 mixed = False
 paced = False
 clicked = False
-
+bowlIngredients = []
 
 
 #sending chatbox updates (this is called in the javascript state machine)
@@ -99,7 +99,6 @@ def cabinet_contents():
         return jsonify({"cabinetContents": cabinetContents, "signal": True})
     else:
         return jsonify({"signal": False})
-bowlIngredients = []
 
 #adding cabinet/fridge contents to the bowl
 @app.route('/add_bowl_ingredient', methods=['POST'])

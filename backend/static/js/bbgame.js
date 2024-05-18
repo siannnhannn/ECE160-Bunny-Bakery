@@ -120,6 +120,8 @@ function handleGameFlow(count, message, mix) {
     } else if (count==2) {
         const messageBox = document.getElementById("instruction-text");
         messageBox.innerHTML = message;
+        showDiv('ingredients');
+        showDiv('bowl-ingredients');
         fridgeContents();
         cabinetContents();
     } else if (count==3) {
