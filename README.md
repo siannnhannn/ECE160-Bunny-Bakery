@@ -1,3 +1,5 @@
+ECE160 Final Project: Bunny Bakery an Idle Web game where your character can bake sweet treats
+
 Instructions on running the game
 
 Make sure to have flask installed:
@@ -20,9 +22,7 @@ python3 -m venv venv
 source venv/bin/activate
 python3 gameplay.py
 
-
 Notes:
-- wasn't able to compute database
-- screen size of the game might be different for different laptop, in order to show full screen, suggested to zoom out on the website, if the format is messed up, suggested open inspect
-- features such as new levels will be computed in upcoming updates
-- logics are in gameplay.py, bbgame.html, and bbgame.js
+- screen size of the game might be different for different laptop, in order to show full screen, suggested to zoom out on the website, if the format is messed up, suggested open inspect; working on fixing this
+- logic in gameplay.py, bbgame.html, and bbgame.js
+- restrictions due to scope of class assignment -> beyond class will be working on scaling up, moving over to primarily javascript for logic, and creating a database
