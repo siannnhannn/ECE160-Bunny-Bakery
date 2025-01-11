@@ -49,7 +49,7 @@ def handle_post():
             return redirect(url_for('login'))
 
             
-#Case 2: check if user exists in db 
+#case 2: check if user exists in db 
         else:
             conn = get_db_connection()
             query_exists = conn.execute('SELECT COUNT(*) FROM posts WHERE uname=?',(username,)).fetchone()

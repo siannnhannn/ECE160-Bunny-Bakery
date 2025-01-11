@@ -35,7 +35,7 @@ def handle_post():
         return render_template('login.html')
 
 
-#Pancakes Class
+#pancakes Class
 class pancake:
     def __init__(self):
         self.recipe = ["milk", "eggs", "butter", "flour", "baking powder", "sugar", "salt"]
@@ -162,7 +162,7 @@ def check_all(dictionary):
     allCooked = all(value == 3 for value in dictionary.values())
     return allCooked
 
-# tracking clicks
+#tracking clicks
 @app.route('/counting_pancake_actions', methods=['POST'])
 def track_click():
     data = request.get_json()
@@ -181,7 +181,7 @@ def all_pancakes_cooked():
     print(allCooked)
     return jsonify({'cookedStatus': allCooked})
 
-# checking bowl topppings to add to pancakes
+#checking bowl topppings to add to pancakes
 @app.route('/check_bowl_toppings')
 def checking_toppings_ingredients():
     try:
@@ -191,7 +191,7 @@ def checking_toppings_ingredients():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# state diagram that contains actual gameflow
+#state diagram that contains actual gameflow
 @app.route('/gameflow', methods=['POST'])
 def l1_game_flow():
     global count, mix, mixed, clicked, allCooked
@@ -270,8 +270,8 @@ def l1_game_flow():
 
 
 
-    result["mix"] = mix  # Update mix state in the result
-    result["count"] = count  # Update count state in the result
+    result["mix"] = mix  #update mix state in the result
+    result["count"] = count  #update count state in the result
     return jsonify(result)
 
 
