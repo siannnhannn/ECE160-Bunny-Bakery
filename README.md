@@ -1,5 +1,7 @@
 ECE160 Final Project: Bunny Bakery an Idle Web game where your character can bake sweet treats
 
+![Bunny Bakery Game](gamepictures/bbpicture.jpg)
+
 Instructions on running the game
 
 Make sure to have flask installed:
